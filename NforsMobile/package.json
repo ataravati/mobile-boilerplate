@@ -1,0 +1,42 @@
+{
+  "name": "NforsMobile",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "test": "cross-env NODE_ENV=test jest \".*\\.test\\.ts\""
+  },
+  "dependencies": {
+    "cross-env": "^5.2.0",
+    "mobx": "4.5.0",
+    "mobx-react": "5.2.8",
+    "mobx-state-tree": "2.0.5",
+    "native-base": "^2.8.1",
+    "react": "16.5.0",
+    "react-dom": "^16.5.2",
+    "react-native": "0.57.2",
+    "react-native-mock-render": "^0.1.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.0.0-0",
+    "@babel/plugin-proposal-decorators": "^7.1.2",
+    "@babel/runtime": "^7.1.2",
+    "@types/jest": "^23.3.4",
+    "@types/react": "^16.4.16",
+    "@types/react-native": "^0.57.4",
+    "@types/react-test-renderer": "^16.0.3",
+    "babel-jest": "23.6.0",
+    "babel-plugin-module-resolver": "^3.1.1",
+    "babel-preset-react-native": "4.0.1",
+    "jest": "23.6.0",
+    "metro-react-native-babel-preset": "0.48.0",
+    "react-addons-test-utils": "^15.6.2",
+    "react-native-typescript-transformer": "^1.2.10",
+    "react-test-renderer": "16.5.0",
+    "ts-jest": "^23.10.4",
+    "typescript": "^3.1.1"
+  },
+  "resolutions": {
+    "babel-core": "7.0.0-bridge.0"
+  }
+}

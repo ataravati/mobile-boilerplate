@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`todo-list can render snapshot 1`] = `
+<react-native-mock>
+  <react-native-mock>
+    <react-native-mock />
+    <react-native-mock />
+  </react-native-mock>
+  <react-native-mock>
+    <react-native-mock />
+    <react-native-mock>
+      <react-native-mock>
+        <react-native-mock>
+          <react-native-mock>
+            <react-native-mock>
+              
+            </react-native-mock>
+            <react-native-mock />
+          </react-native-mock>
+        </react-native-mock>
+        <react-native-mock>
+          <react-native-mock>
+            Add Todo
+          </react-native-mock>
+        </react-native-mock>
+      </react-native-mock>
+    </react-native-mock>
+  </react-native-mock>
+  <react-native-mock />
+</react-native-mock>
+`;
