@@ -25,6 +25,18 @@ interface TodoListState {
   newTodoText: string;
 }
 
+export const TodoItem = ({ destroyTodo, key, todo }) => (
+  <View key={key} style={styles.todo}>
+    <Text>{todo.title}</Text>
+    <Text>{todo.done}</Text>
+    <View>
+      <Button onPress={() => destroyTodo(todo)}>
+        <Text>Delete</Text>
+      </Button>
+    </View>
+  </View>
+);
+
 const TodoItems = ({
   destroyTodo,
   todos,
@@ -35,15 +47,7 @@ const TodoItems = ({
   return (
     <View style={styles.todos}>
       {todos.map((todo: typeof Todo.Type, index: number) => (
-        <View key={index} style={styles.todo}>
-          <Text>{todo.title}</Text>
-          <Text>{todo.done}</Text>
-          <View>
-            <Button onPress={() => destroyTodo(todo)}>
-              <Text>Delete</Text>
-            </Button>
-          </View>
-        </View>
+        <TodoItem destroyTodo={destroyTodo} key={index} todo={todo} />
       ))}
     </View>
   );

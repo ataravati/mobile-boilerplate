@@ -1,7 +1,7 @@
 import { todoStore, Todo } from "./todo-store";
 
 describe("clear", () => {
-  it("can", () => {
+  xit("can", () => {
     todoStore.addTodo("foo");
     expect(todoStore.todos.slice()).toEqual([
       { title: "foo", done: false },

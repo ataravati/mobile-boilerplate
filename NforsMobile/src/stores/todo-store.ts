@@ -32,7 +32,7 @@ export const todoStore = TodoStoreModel.create({
 });
 
 onSnapshot(todoStore, snapshot => {
-  console.log(snapshot);
+  console.log("snapshot:", snapshot);
 });
 
 export type TodoStore = typeof TodoStoreModel.Type;
