@@ -19,26 +19,26 @@ describe("todo-list", () => {
     expect(tree).toMatchSnapshot();
   });
 
-  it("can render at least one Button", () => {
-    const wrapper: ReactWrapper = mount(
-      <Provider todoStore={todoStore}>
-        <TodoList />
-      </Provider>,
-    );
+  // it("can render at least one Button", () => {
+  //   const wrapper: ReactWrapper = mount(
+  //     <Provider todoStore={todoStore}>
+  //       <TodoList />
+  //     </Provider>,
+  //   );
 
-    const input: any = wrapper.find("Input").first();
-    const addTodoButton = wrapper
-      .find("Button")
-      .findWhere(w => w.text() === "Add Todo")
-      .first();
+  //   const input: any = wrapper.find("Input").first();
+  //   const addTodoButton = wrapper
+  //     .find("Button")
+  //     .findWhere(w => w.text() === "Add Todo")
+  //     .first();
 
-    console.log(wrapper.find("View"));
-    input.props().onChangeText("Foo");
-    addTodoButton.props().onPress();
+  //   console.log(wrapper.find("View"));
+  //   input.props().onChangeText("Foo");
+  //   addTodoButton.props().onPress();
 
-    const domText = wrapper
-      .findWhere(w => !!w.text() && w.text().includes("Foo"))
-      .first();
-    expect(domText).toExist();
-  });
+  //   const domText = wrapper
+  //     .findWhere(w => !!w.text() && w.text().includes("Foo"))
+  //     .first();
+  //   expect(domText).toExist();
+  // });
 });

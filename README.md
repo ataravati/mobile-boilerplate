@@ -59,7 +59,7 @@ Make sure to read up about limitations like inability to do background tasks (e.
 - You can't reuse existing native module solutions, such as Airbnb's map component. [React-native first impressions: Expo vs. Native – paulsc – Medium](https://medium.com/@paulsc/react-native-first-impressions-expo-vs-native-9565cce44c92) - you are stuck with the Expo equivalent, or JS only solutions. This might not be as limiting, as 213 / 351 components listed here support Expo [Native Directory](http://native.directory/downloads)
 - Publishing puts a public copy on Amazon CloudFront
 - Delay in updates to latest React Native version
-- [How I ditched Expo for pure React Native – gitconnected | Become a Better Developer](https://levelup.gitconnected.com/how-i-ditched-expo-for-pure-react-native-fc0375361307) - **No background geolocation** (Tracking the location of the device even if the app is not in the foreground): 
+- [How I ditched Expo for pure React Native – gitconnected | Become a Better Developer](https://levelup.gitconnected.com/how-i-ditched-expo-for-pure-react-native-fc0375361307) - **No background geolocation** (Tracking the location of the device even if the app is not in the foreground):
   - [Background location tracking | Feature Requests | Expo](https://expo.canny.io/feature-requests/p/background-location-tracking)
   - This may be in progress though, slated for SDK31?
   - [RFC: Audio playback in background · Issue #1195 · expo/expo · GitHub](https://github.com/expo/expo/issues/1195)
@@ -150,13 +150,21 @@ Jest is the go-to test runner / assertion library for React front-ends, and Reac
 
 End-to-End testing framework I saw mentioned several times in researching React Native E2E frameworks.
 
+While I have read good reviews of it... https://pillow.codes/testing-in-react-native-jest-detox-d7b3b79a166a
+
+Android support isn't there. It has issues on new React Native versions: https://github.com/wix/detox/issues/608
+
+They are actively working on the Android support: https://github.com/wix/Detox/issues/907
+
+We might be able to use it with iOS emulators for now, if it is a good solution, and then be able to support Android down the road.
+
 [GitHub - pixielabs/cavy: An integration test framework for React Native.](https://github.com/pixielabs/cavy)
 
 End-to-End testing framework specifically made for React Native.
 
 [Appium: Mobile App Automation Made Awesome.](http://appium.io/)
 
-End-to-End testing framework, definitely a popular choice I've heard about many times.
+End-to-End testing framework, definitely a popular choice I've heard about many times. Though these guys found it to be flaky and harder to set up than Detox: https://pillow.codes/testing-in-react-native-jest-detox-d7b3b79a166a
 
 ### CI/CD / Builds
 
@@ -215,7 +223,7 @@ Run the solution on your phone or a connected emulator. USB is required for your
 
 Usually you have to shake your phone to get to the developer menu. Not always ideal.
 
-You can use `adb` instead to send a shake event to the phone, and 
+You can use `adb` instead to send a shake event to the phone, and
 
 ```$ adb shell input keyevent 82; and adb shell input keyevent 66; and adb shell input keyevent 66```
 

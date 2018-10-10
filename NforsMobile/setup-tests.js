@@ -38,6 +38,6 @@ copyProps(window, global);
 Enzyme.configure({ adapter: new Adapter() });
 
 // TODO - this makes the snapshot testing much harder to read. Can we only apply this to Enzyme tests?
-jest.mock("react-native", () => require("react-native-mock-render"), {
-  virtual: true,
-});
+// jest.mock("react-native", () => require("react-native-mock-render"), {
+//   virtual: true,
+// });
