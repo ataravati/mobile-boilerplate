@@ -8,6 +8,10 @@
   },
   "dependencies": {
     "cross-env": "^5.2.0",
+    "enzyme": "^3.7.0",
+    "enzyme-adapter-react-16": "^1.6.0",
+    "jest-enzyme": "^7.0.0",
+    "jsdom": "^12.2.0",
     "mobx": "4.5.0",
     "mobx-react": "5.2.8",
     "mobx-state-tree": "2.0.5",
