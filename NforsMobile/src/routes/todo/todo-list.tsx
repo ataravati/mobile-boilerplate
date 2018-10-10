@@ -27,7 +27,7 @@ interface TodoListState {
 
 export const TodoItem = ({ destroyTodo, key, todo }) => (
   <View key={key} style={styles.todo}>
-    <Text>{todo.title}</Text>
+    <Text>Todo: {todo.title}</Text>
     <Text>{todo.done}</Text>
     <View>
       <Button onPress={() => destroyTodo(todo)}>
