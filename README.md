@@ -163,6 +163,8 @@ Tips:
 - yarn test -u --testNamePattern - updates the snapshots for just those tests matching the pattern.
 - yarn test --watch has a nice TUI to filter tests and watch for file changes
 - Snapshot testing works for anything, just just an initial component rendering. You can use Enzyme debug/html/text wrapper methods, or tools that output components to JSON, etc. There are libraries that do diffs also, so you could test JUST what changed when you clicked a button, rather than breaking on everything.
+- Use `jest.mock()` for injecting dependencies. Note that components might need to be mocked before the tests run. I was having issues mocking at the start of the test or in beforeEach(), but I was able to mock at the top of the file (but make sure it doesn't impact other tests that use the mock...). You can use `__mocks__` folder, but that is inflexible if you need your mocks to respond different per test.
+- Use `jest.fn()` to spy on functions, similar to sinon stubs. This would e.g. allow you to verify a method was called, but not actually have that method do anything. https://jestjs.io/docs/en/mock-function-api.html
 - Use Husky to run your tests on Git commit or push.
 
 [Husky - typicode/husky: Git hooks made easy](https://github.com/typicode/husky)
