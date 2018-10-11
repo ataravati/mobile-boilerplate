@@ -140,11 +140,34 @@ Testing
 
 Allow rendering of components in unit tests. No E2E UI/PhantomJS/Puppeteer required.
 
-Use Enzyme with react-native-mock (or react-native-mock-renderer), which fake the native components to treat it as web DOM, making it testable.
+The documentation from Enzyme on React Native is spare and possibly inaccurate. I was able to get Enzyme working without react-native-mock/react-native-mock-renderer (and actually react-native-mock-renderer made DOM string output representations ugly).
+
+Tips:
+
+- Shallow rendering with `dive()` is an alternative to `mount()`, if you are less concerned about integration testing between components / children and lifecycle methods. But I tend to agree with Kent C. Dodds that integration testing is more valuable, ad focusing on real use cases: https://blog.kentcdodds.com/why-i-never-use-shallow-rendering-c08851a68bb7
+- Make sure to call `wrapper.update()` if you simulate clicks on children and/or cause updates via MobX state changes. Otherwise your component probably won't have the updated DOM and component changes you expect.
+- Do console.log of `wrapper.debug()`, `wrapper.html()`, or `wrapper.text()` to debug issues. Note that if debug() shows `<Component>` instead of your component name, you might want to avoid using arrow functions. Standard functions or classes will have the correct name in `debug()`, where as arrow functions are inherently unnamed: 
+- React Native allows a `testID` prop you can search for with wrapper.findWhere, since React Native doesn't allow for className.
+- See the examples I have for the todo-list
 
 [Testing React Native Apps · Jest](https://jestjs.io/docs/en/tutorial-react-native)
 
 Jest is the go-to test runner / assertion library for React front-ends, and React Native is no exception. Generally a great user experience and little setup required, though Mocha/Chai/Sinon are a little more performant and have their own benefits more for backend dev.
+
+Tips:
+
+- Make sure to look over their API: https://jestjs.io/docs/en/api.html
+- `xit` is a shortcut to skip an `it` test
+- it.only() skips all tests but the one you want
+- yarn test --testNamePattern - allows you to filter what test to run by the describe or it statement text.
+- yarn test -u --testNamePattern - updates the snapshots for just those tests matching the pattern.
+- yarn test --watch has a nice TUI to filter tests and watch for file changes
+- Snapshot testing works for anything, just just an initial component rendering. You can use Enzyme debug/html/text wrapper methods, or tools that output components to JSON, etc. There are libraries that do diffs also, so you could test JUST what changed when you clicked a button, rather than breaking on everything.
+- Use Husky to run your tests on Git commit or push.
+
+[Husky - typicode/husky: Git hooks made easy](https://github.com/typicode/husky)
+
+Not React Native specific, but Husky is something I recommend for all projects. Catch issues before commit/push, before ever going into a CI/CD system. Allows you to add hooks easily for any GitHub action, such as running Prettier, eslint, and Jest before accepting your commit.
 
 [GitHub - wix/Detox: Gray Box End-to-End Testing and Automation Framework for Mobile Apps](https://github.com/wix/Detox)
 

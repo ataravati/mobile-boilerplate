@@ -14,6 +14,7 @@ import {
   View,
 } from "native-base";
 import { StyleSheet } from "react-native";
+import { TodoItem } from "./todo-item";
 
 import { TodoStore, Todo } from "../../stores/todo-store";
 
@@ -24,18 +25,6 @@ interface TodoListProps {
 interface TodoListState {
   newTodoText: string;
 }
-
-export const TodoItem = ({ destroyTodo, key, todo }) => (
-  <View key={key} style={styles.todo}>
-    <Text>Todo: {todo.title}</Text>
-    <Text>{todo.done}</Text>
-    <View>
-      <Button onPress={() => destroyTodo(todo)}>
-        <Text>Delete</Text>
-      </Button>
-    </View>
-  </View>
-);
 
 const TodoItems = ({
   destroyTodo,
@@ -126,11 +115,5 @@ const styles = StyleSheet.create({
   todos: {
     flex: 3,
     flexDirection: "column",
-  },
-  todo: {
-    flex: 1,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    margin: 10,
   },
 });

@@ -1,3 +1,4 @@
+import React from "react";
 import "react-native";
 import "jest-enzyme";
 import Adapter from "enzyme-adapter-react-16";
@@ -39,6 +40,7 @@ Enzyme.configure({ adapter: new Adapter() });
 
 const originalConsoleError = console.error;
 console.error = message => {
+  // see: https://jestjs.io/docs/en/tutorial-react.html#snapshot-testing-with-mocks-enzyme-and-react-16
   // see https://github.com/Root-App/react-native-mock-render/issues/6
   if (message.startsWith("Warning:")) {
     return;
@@ -46,8 +48,3 @@ console.error = message => {
 
   originalConsoleError(message);
 };
-
-// TODO - this makes the snapshot testing much harder to read. Can we only apply this to Enzyme tests?
-// jest.mock("react-native", () => require("react-native-mock-render"), {
-//   virtual: true,
-// });
