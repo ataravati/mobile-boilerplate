@@ -150,6 +150,12 @@ Tips:
 - React Native allows a `testID` prop you can search for with wrapper.findWhere, since React Native doesn't allow for className.
 - See the examples I have for the todo-list
 
+[react-native-testing-library](https://github.com/callstack/react-native-testing-library)
+
+New alternative to Enzyme. I don't know that it has any advantages over Enzyme, but it is good to have a backup plan if Enzyme ever fails us.
+
+This is based on Kent C. Dodd's semi-popular library alternative to Enzyme for React: https://github.com/kentcdodds/react-testing-library
+
 [Testing React Native Apps · Jest](https://jestjs.io/docs/en/tutorial-react-native)
 
 Jest is the go-to test runner / assertion library for React front-ends, and React Native is no exception. Generally a great user experience and little setup required, though Mocha/Chai/Sinon are a little more performant and have their own benefits more for backend dev.
