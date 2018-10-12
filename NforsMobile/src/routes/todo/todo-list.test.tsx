@@ -2,6 +2,7 @@ import React from "react";
 import renderer from "react-test-renderer";
 import { mount, ReactWrapper } from "enzyme";
 import { Provider } from "mobx-react";
+import { Text } from "native-base";
 
 import { TodoItem } from "./todo-item";
 import { TodoList } from "./todo-list";
@@ -106,6 +107,16 @@ describe("todo-list", () => {
           .hostNodes()
           .text(),
       ).toEqual(newTodoText);
+
+      // You can render a component you expect to be similar to one found in the wrapper
+      expect(
+        wrapper.containsMatchingElement(<Text>{newTodoText}</Text>),
+      ).toBeTruthy();
+
+      // You can even do snapshot testing,
+      // if you pull in enzyme-to-json and configure
+      // it in snapshotSerializers in package.json
+      expect(wrapper).toMatchSnapshot();
     });
   });
 });
