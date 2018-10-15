@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "@types/enzyme": "^3.1.14",
+    "@types/react-navigation": "^2.0.24",
     "cross-env": "^5.2.0",
     "enzyme": "^3.7.0",
     "enzyme-adapter-react-16": "^1.6.0",

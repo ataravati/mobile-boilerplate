@@ -15,11 +15,16 @@ import {
 } from "native-base";
 import { StyleSheet } from "react-native";
 import { TodoItem } from "./todo-item";
-import { createStackNavigator } from "react-navigation";
+import {
+  createStackNavigator,
+  NavigationScreenProp,
+  NavigationState,
+} from "react-navigation";
 
 import { TodoStore, Todo } from "../../stores/todo-store";
 
 interface TodoListProps {
+  navigation: NavigationScreenProp<NavigationState>;
   todoStore?: TodoStore;
 }
 
