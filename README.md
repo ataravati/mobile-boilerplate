@@ -91,6 +91,21 @@ Make sure to read up about limitations like inability to do background tasks (e.
 
 ## Components
 
+### Navigation
+
+There are many options out there, but two are  most popular and recommended:
+
+[React Navigation](https://reactnavigation.org/)
+
+Most popular solution, may become the standard. JavaScript-only solution. Easy to set up and use.
+
+[React Native Navigation](https://wix.github.io/react-native-navigation/#/)
+
+Most popular _native_ solution. A little more set up than React Navigation, but it is all native, meaning faster performance and a more native feel.
+
+Note this isn't an option on Expo, since Expo doesn't allow native third party code.
+
+
 ### Component Libraries
 
 [NativeBase | Essential cross-platform UI components for React Native](https://nativebase.io/)
