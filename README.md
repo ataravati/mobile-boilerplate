@@ -105,6 +105,7 @@ Most popular _native_ solution. A little more set up than React Navigation, but 
 
 Note this isn't an option on Expo, since Expo doesn't allow native third party code.
 
+Also, as of Oct 15, 2018, they are undergoing a rewrite. They recommend using the v2 rewrite, but it is currently alpha. I wouldn't recommend using this library unless a more native experience is needed.
 
 ### Component Libraries
 
