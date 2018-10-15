@@ -1,23 +1,27 @@
 import React, { Component } from "react";
 import { Provider } from "mobx-react";
-import { Platform } from "react-native";
+import { createStackNavigator } from "react-navigation";
 
 import { todoStore } from "./src/stores/todo-store";
-import { TodoList } from "./src/routes/todo/todo-list";
+import { PointlessScreen } from "./src/screens/pointless-screen";
+import { TodoList } from "./src/screens/todo-list";
 
-const instructions = Platform.select({
-  ios: "Press Cmd+R to reload,\n" + "Cmd+D or shake for dev menu",
-  android:
-    "Double tap R on your keyboard to reload,\n" +
-    "Shake or press menu button for dev menu",
-});
+const Router = createStackNavigator(
+  {
+    PointlessScreen,
+    TodoList,
+  },
+  {
+    initialRouteName: "TodoList",
+  },
+);
 
 type Props = {};
 export default class App extends Component<Props> {
   render() {
     return (
       <Provider todoStore={todoStore}>
-        <TodoList />
+        <Router />
       </Provider>
     );
   }

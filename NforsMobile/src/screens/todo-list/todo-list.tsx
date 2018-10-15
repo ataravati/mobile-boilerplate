@@ -15,6 +15,7 @@ import {
 } from "native-base";
 import { StyleSheet } from "react-native";
 import { TodoItem } from "./todo-item";
+import { createStackNavigator } from "react-navigation";
 
 import { TodoStore, Todo } from "../../stores/todo-store";
 
@@ -44,7 +45,7 @@ const TodoItems = ({
 
 @inject("todoStore")
 @observer
-export class TodoList extends React.Component<TodoListProps, TodoListState> {
+class TodoListComponent extends React.Component<TodoListProps, TodoListState> {
   state = {
     newTodoText: "",
   };
@@ -89,6 +90,14 @@ export class TodoList extends React.Component<TodoListProps, TodoListState> {
               >
                 <Text>Add Todo</Text>
               </Button>
+              <Button
+                full
+                onPress={() =>
+                  this.props.navigation.navigate("PointlessScreen")
+                }
+              >
+                <Text>Go to a pointless screen</Text>
+              </Button>
             </View>
           </View>
         </Content>
@@ -115,5 +124,11 @@ const styles = StyleSheet.create({
   todos: {
     flex: 3,
     flexDirection: "column",
+  },
+});
+
+export const TodoList = createStackNavigator({
+  TodoList: {
+    screen: TodoListComponent,
   },
 });
