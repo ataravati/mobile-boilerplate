@@ -10,7 +10,7 @@ module.exports = {
     "\\.js$": "babel-jest",
   },
   transformIgnorePatterns: [
-    "node_modules/(?!react-native|native-base-shoutem-theme|@shoutem/animation|@shoutem/ui|tcomb-form-native)",
+    "node_modules/(?!react-native|native-base-shoutem-theme|@shoutem/animation|@shoutem/ui|tcomb-form-native|react-navigation-stack|react-navigation)",
   ],
   globals: {
     "ts-jest": {

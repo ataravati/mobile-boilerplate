@@ -9,6 +9,13 @@ import { TodoList } from "./todo-list";
 import { todoStore } from "../../stores/todo-store";
 import console = require("console");
 
+// https://github.com/react-navigation/react-navigation/issues/2269
+// React Navigation generates random React keys, which makes 
+// snapshot testing fail. Mock the randomness to keep from failing.
+jest.mock('react-navigation/src/routers/KeyGenerator', () => ({
+  generateKey: jest.fn(() => 123)
+}));
+
 describe("todo-list", () => {
   /**
    * Example usage of Jest Snapshot testing.
@@ -46,8 +53,9 @@ describe("todo-list", () => {
      * be hard to find() the elements you care about.
      */
     it("can add a Todo with Enzyme", () => {
+
       const wrapper: ReactWrapper = mount(
-        <Provider todoStore={todoStore}>
+        <Provider keyLength={0} todoStore={todoStore}>
           <TodoList />
         </Provider>,
       );
@@ -116,7 +124,7 @@ describe("todo-list", () => {
       // You can even do snapshot testing,
       // if you pull in enzyme-to-json and configure
       // it in snapshotSerializers in package.json
-      expect(wrapper).toMatchSnapshot();
+      expect(wrapper.find(TodoList)).toMatchSnapshot();
     });
   });
 });
