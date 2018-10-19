@@ -4,6 +4,12 @@
 
 - [mobile-boilerplate](#mobile-boilerplate)
 - [About this repo](#about-this-repo)
+- [Usage](#usage)
+  - [Getting Started](#getting-started)
+  - [General commands](#general-commands)
+  - [Tips & Tricks](#tips--tricks)
+    - [Access developer menu on your phone without shaking](#access-developer-menu-on-your-phone-without-shaking)
+  - [Issues](#issues)
 - [Modules](#modules)
   - [Expo](#expo)
     - [Good references](#good-references)
@@ -25,12 +31,6 @@
       - [Reference](#reference)
       - [Tools](#tools)
     - [Cross Platform](#cross-platform)
-- [Usage](#usage)
-  - [Getting Started](#getting-started)
-  - [General commands](#general-commands)
-  - [Tips & Tricks](#tips--tricks)
-    - [Access developer menu on your phone without shaking](#access-developer-menu-on-your-phone-without-shaking)
-  - [Issues](#issues)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
