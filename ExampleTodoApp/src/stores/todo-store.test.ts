@@ -4,7 +4,7 @@ describe("todo-store", () => {
   it("can add a todo", () => {
     todoStore.addTodo("foo");
     expect(todoStore.todos.slice()).toEqual([
-      { title: "foo", done: false },
+      { title: "foo", completed: false },
     ] as typeof Todo.Type[]);
   });
 });

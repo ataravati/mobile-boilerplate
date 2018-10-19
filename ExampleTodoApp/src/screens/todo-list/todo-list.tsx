@@ -10,6 +10,7 @@ import {
   Icon,
   Input,
   Item,
+  Spinner,
   Text,
   View,
 } from "native-base";
@@ -63,15 +64,19 @@ class TodoListComponent extends React.Component<TodoListProps, TodoListState> {
     this.props.todoStore!.addTodo(text);
   };
 
+  fetchTodos = () => {
+    this.props.todoStore!.fetchTodos();
+  };
+
   render() {
     return (
       <Container>
         <Header />
         <Content>
-          <TodoItems
+          {this.props.todoStore!.isLoading ? <Spinner /> : <TodoItems
             todos={this.props.todoStore!.todos.slice()}
             destroyTodo={this.destroyTodo}
-          />
+          />}
           <View style={styles.newTodo}>
             <View>
               <Form>
@@ -94,6 +99,14 @@ class TodoListComponent extends React.Component<TodoListProps, TodoListState> {
                 }}
               >
                 <Text>Add Todo</Text>
+              </Button>
+              <Button
+                full
+                onPress={() => {
+                  this.fetchTodos();
+                }}
+              >
+                <Text>Fetch Example Todos From API</Text>
               </Button>
               <Button
                 full

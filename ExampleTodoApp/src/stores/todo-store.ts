@@ -1,25 +1,34 @@
-import { destroy, types, onSnapshot } from "mobx-state-tree";
+import { destroy, flow, types, onSnapshot } from "mobx-state-tree";
+
+import { fakeApi } from "../apis/fake-api";
 
 export const Todo = types
   .model("Todo", {
     title: types.string,
-    done: false,
+    completed: false,
   })
   .actions(self => ({
     toggle() {
-      self.done = !self.done;
+      self.completed = !self.completed;
     },
   }));
 
 const TodoStoreModel = types
   .model("TodoStore", {
+    isLoading: types.boolean,
     todos: types.array(Todo),
   })
   .actions(self => ({
+    fetchTodos: flow(function*() {
+      self.isLoading = true;
+      const response = yield fakeApi.get("/todos");
+      self.isLoading = false;
+      self.todos.replace(response.data.slice(0, 6));
+    }),
     addTodo(text: string) {
       self.todos.push({
         title: text,
-        done: false,
+        completed: false,
       } as typeof Todo.Type);
     },
     destroyTodo(todo: typeof Todo.Type) {
@@ -28,6 +37,7 @@ const TodoStoreModel = types
   }));
 
 export const todoStore = TodoStoreModel.create({
+  isLoading: false,
   todos: [],
 });
 

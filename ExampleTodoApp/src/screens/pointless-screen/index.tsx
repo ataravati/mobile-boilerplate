@@ -1,7 +1,10 @@
 import React from "react";
 import { Text, View } from "native-base";
 
-export class PointlessScreen extends React.Component {
+interface TodoListProps {
+}
+
+export class PointlessScreen extends React.Component<TodoListProps, void> {
   render() {
     return (
       <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
