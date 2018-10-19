@@ -48,6 +48,54 @@ This repo is a combination of boilerplate code for new React Native mobile apps,
 - Jest
 - Enzyme
 
+The README.md also contains a list of recommendations (below) for using React Native, which influenced technologies adopted thus far in this boilerplate.
+
+
+# Usage
+
+## Getting Started
+
+Follow `Build Projects with Native Code` here: https://facebook.github.io/react-native/docs/getting-started.html
+
+You will need your phone connected via USB, or to use an emulator in e.g. Android Studio.
+
+## General commands
+
+`react-native run-android`
+
+Run the solution on your phone or a connected emulator. USB is required for your phone (unless you are using an Expo app).
+
+## Tips & Tricks
+
+### Access developer menu on your phone without shaking
+
+Usually you have to shake your phone to get to the developer menu. Not always ideal.
+
+You can use `adb` instead to send a shake event to the phone, and
+
+```$ adb shell input keyevent 82; and adb shell input keyevent 66; and adb shell input keyevent 66```
+
+## Issues
+
+[error: bundling failed: Error: Unable to resolve module `./../react-transform-hmr/lib/index.js` · Issue #21490 · facebook/react-native · GitHub](https://github.com/facebook/react-native/issues/21490)
+
+If you see this error:
+
+`Unable to resolve module `./../react-transform-hmr/lib/index.js``
+
+Follow these steps, especially the `react-native start  --reset-cache` seems to help:
+
+```
+# Clean cache
+rm -rf $TMPDIR/react-*; rm -rf $TMPDIR/haste-*; rm -rf $TMPDIR/metro-*; watchman watch-del-all
+
+# Open a new tab and Start Metro Bundler directly from the project folder
+react-native start  --reset-cache
+
+# Now run `react-native run-android` or `react-native run-ios
+```
+
+
 # Modules
 
 ## Expo
@@ -290,47 +338,3 @@ Alternative to react-native-web
 [Proton Native - React Native for the desktop, cross compatible](https://proton-native.js.org/#/)
 
 Reuse your React Native sites on the desktop.
-
-# Usage
-
-## Getting Started
-
-Follow `Build Projects with Native Code` here: https://facebook.github.io/react-native/docs/getting-started.html
-
-You will need your phone connected via USB, or to use an emulator in e.g. Android Studio.
-
-## General commands
-
-`react-native run-android`
-
-Run the solution on your phone or a connected emulator. USB is required for your phone (unless you are using an Expo app).
-
-## Tips & Tricks
-
-### Access developer menu on your phone without shaking
-
-Usually you have to shake your phone to get to the developer menu. Not always ideal.
-
-You can use `adb` instead to send a shake event to the phone, and
-
-```$ adb shell input keyevent 82; and adb shell input keyevent 66; and adb shell input keyevent 66```
-
-## Issues
-
-[error: bundling failed: Error: Unable to resolve module `./../react-transform-hmr/lib/index.js` · Issue #21490 · facebook/react-native · GitHub](https://github.com/facebook/react-native/issues/21490)
-
-If you see this error:
-
-`Unable to resolve module `./../react-transform-hmr/lib/index.js``
-
-Follow these steps, especially the `react-native start  --reset-cache` seems to help:
-
-```
-# Clean cache
-rm -rf $TMPDIR/react-*; rm -rf $TMPDIR/haste-*; rm -rf $TMPDIR/metro-*; watchman watch-del-all
-
-# Open a new tab and Start Metro Bundler directly from the project folder
-react-native start  --reset-cache
-
-# Now run `react-native run-android` or `react-native run-ios
-```
