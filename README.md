@@ -3,9 +3,14 @@ mobile-boilerplate
 
 # About this repo
 
-This repo is a combination of boilerplate code for new mobile apps, as well as best practices.
+This repo is a combination of boilerplate code for new React Native mobile apps, as well as best practices.
 
-Be warned: this might fall out-of-date, and React Native can be a little more difficult to upgrade than a web app. Make sure to check what the latest React Native version is, compared to what is in package.json. Consider updating this repo, or starting your own project with `react-native init`, or use Expo or Ignite.
+- React Native
+- TypeScript
+- NativeBase
+- MobX-State-Tree
+- Jest
+- Enzyme
 
 # Modules
 
