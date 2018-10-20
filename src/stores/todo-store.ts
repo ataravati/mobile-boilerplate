@@ -23,7 +23,7 @@ const TodoStoreModel = types
       self.isLoading = true;
       const response = yield fakeApi.get("/todos");
       self.isLoading = false;
-      self.todos.replace(response.data.slice(0, 6));
+      self.todos.replace(response.data.slice(0, 10));
     }),
     addTodo(text: string) {
       self.todos.push({

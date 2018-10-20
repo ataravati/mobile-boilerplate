@@ -1,20 +1,19 @@
 import React from "react";
 import { inject, observer } from "mobx-react/native";
 import {
+  Body,
   Button,
   Container,
   Content,
   Footer,
-  Form,
   Header,
   Icon,
   Input,
   Item,
   Spinner,
   Text,
-  View,
 } from "native-base";
-import { StyleSheet } from "react-native";
+import { ScrollView, StyleSheet } from "react-native";
 import { TodoItem } from "./todo-item";
 import {
   createStackNavigator,
@@ -41,19 +40,23 @@ const TodoItems = ({
   todos: typeof Todo.Type[];
 }) => {
   return (
-    <View style={styles.todos}>
+    <ScrollView style={styles.todos}>
       {todos.map((todo: typeof Todo.Type, index: number) => (
         <TodoItem destroyTodo={destroyTodo} key={index} todo={todo} />
       ))}
-    </View>
+    </ScrollView>
   );
 };
 
 @inject("todoStore")
 @observer
-class TodoListComponent extends React.Component<TodoListProps, TodoListState> {
+export class TodoList extends React.Component<TodoListProps, TodoListState> {
   state = {
     newTodoText: "",
+  };
+
+  static navigationOptions = {
+    title: 'Todo List',
   };
 
   destroyTodo = (todo: typeof Todo.Type) => {
@@ -71,55 +74,53 @@ class TodoListComponent extends React.Component<TodoListProps, TodoListState> {
   render() {
     return (
       <Container>
-        <Header />
-        <Content>
+        <Header transparent>
+          <Body style={{flexDirection: "row"}}>
+            <Item regular style={{ flex: 1, flexGrow: 4 }}>
+              <Icon name="create" />
+              <Input
+                onChangeText={text => this.setState({ newTodoText: text })}
+                value={this.state.newTodoText || ""}
+              />
+            </Item>
+            <Button
+              transparent
+              style={{ flexGrow: 0 }}
+              onPress={() => {
+                this.addTodo(this.state.newTodoText);
+                this.setState({
+                  newTodoText: "",
+                });
+              }}
+            >
+              <Text>Add Todo</Text>
+            </Button>
+          </Body>
+        </Header>
+        <Content style={{ flex: 1 }}>
           {this.props.todoStore!.isLoading ? <Spinner /> : <TodoItems
             todos={this.props.todoStore!.todos.slice()}
             destroyTodo={this.destroyTodo}
           />}
-          <View style={styles.newTodo}>
-            <View>
-              <Form>
-                <Item>
-                  <Icon active name="create" />
-                  <Input
-                    placeholder="New Todo..."
-                    onChangeText={text => this.setState({ newTodoText: text })}
-                    value={this.state.newTodoText || ""}
-                  />
-                </Item>
-              </Form>
-              <Button
-                full
-                onPress={() => {
-                  this.addTodo(this.state.newTodoText);
-                  this.setState({
-                    newTodoText: "",
-                  });
-                }}
-              >
-                <Text>Add Todo</Text>
-              </Button>
-              <Button
-                full
-                onPress={() => {
-                  this.fetchTodos();
-                }}
-              >
-                <Text>Fetch Example Todos From API</Text>
-              </Button>
-              <Button
-                full
-                onPress={() =>
-                  this.props.navigation.navigate("PointlessScreen")
-                }
-              >
-                <Text>Go to a pointless screen</Text>
-              </Button>
-            </View>
-          </View>
         </Content>
-        <Footer />
+        <Footer style={{ flexDirection: "column", height: 100 }}>
+          <Button
+            full
+            onPress={() => {
+              this.fetchTodos();
+            }}
+          >
+            <Text>Fetch Example Todos From API</Text>
+          </Button>
+          <Button
+            full
+            onPress={() =>
+              this.props.navigation.navigate("PointlessScreen")
+            }
+          >
+            <Text>Go to a pointless screen</Text>
+          </Button>
+        </Footer>
       </Container>
     );
   }
@@ -139,14 +140,12 @@ const styles = StyleSheet.create({
   newTodo: {
     flex: 1,
   },
+  newTodoInput: {
+    flexGrow: 1,
+  },
   todos: {
     flex: 3,
     flexDirection: "column",
-  },
-});
-
-export const TodoList = createStackNavigator({
-  TodoList: {
-    screen: TodoListComponent,
+    width: "100%",
   },
 });
