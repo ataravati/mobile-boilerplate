@@ -1,5 +1,6 @@
 import React from "react";
 import renderer from "react-test-renderer";
+import { createStackNavigator } from "react-navigation";
 import { mount, ReactWrapper } from "enzyme";
 import { Provider } from "mobx-react";
 import { Text } from "native-base";
@@ -16,6 +17,21 @@ jest.mock("react-navigation/src/routers/KeyGenerator", () => ({
   generateKey: jest.fn(() => 123)
 }));
 
+const routes = (routeConfigMap, initialRouteName) => {
+  const Router = createStackNavigator(
+    routeConfigMap,
+    {
+      initialRouteName,
+    },
+  );
+
+  return (
+    <Provider keyLength={0} todoStore={todoStore}>
+      <Router />
+    </Provider>
+  )
+}
+
 describe("todo-list", () => {
   /**
    * Example usage of Jest Snapshot testing.
@@ -30,11 +46,9 @@ describe("todo-list", () => {
    */
   it("can render snapshot", () => {
     const tree = renderer
-      .create(
-        <Provider todoStore={todoStore}>
-          <TodoList />
-        </Provider>,
-      )
+      .create(routes({
+        TodoList
+      }, "TodoList"))
       .toJSON();
     expect(tree).toMatchSnapshot();
   });
@@ -55,9 +69,9 @@ describe("todo-list", () => {
     it("can add a Todo with Enzyme", () => {
 
       const wrapper: ReactWrapper = mount(
-        <Provider keyLength={0} todoStore={todoStore}>
-          <TodoList />
-        </Provider>,
+        routes({
+          TodoList
+        }, "TodoList")
       );
 
       const newTodoText = "I need to do something...";
