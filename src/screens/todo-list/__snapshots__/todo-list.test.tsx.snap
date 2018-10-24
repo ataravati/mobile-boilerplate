@@ -88,10 +88,10 @@ exports[`todo-list can render snapshot 1`] = `
             <View
               style={
                 Object {
-                  "backgroundColor": "transparent",
-                  "borderBottomColor": "transparent",
+                  "backgroundColor": "#F8F8F8",
+                  "borderBottomColor": "#a7a6ab",
                   "borderBottomWidth": 0.5,
-                  "elevation": 0,
+                  "elevation": 3,
                   "flexDirection": "row",
                   "height": 64,
                   "justifyContent": "center",
@@ -100,14 +100,13 @@ exports[`todo-list can render snapshot 1`] = `
                   "paddingRight": 10,
                   "paddingTop": 18,
                   "right": 0,
-                  "shadowColor": null,
-                  "shadowOffset": null,
-                  "shadowOpacity": null,
-                  "shadowRadius": null,
+                  "shadowColor": undefined,
+                  "shadowOffset": undefined,
+                  "shadowOpacity": undefined,
+                  "shadowRadius": undefined,
                   "top": 0,
                 }
               }
-              transparent={true}
             >
               <View
                 style={
@@ -676,16 +675,14 @@ exports[`todo-list enzyme tests can add a Todo with Enzyme 1`] = `
               }
             }
           >
-            <Styled(Header)
-              transparent={true}
-            >
+            <Styled(Header)>
               <Header
                 style={
                   Object {
-                    "backgroundColor": "transparent",
-                    "borderBottomColor": "transparent",
+                    "backgroundColor": "#F8F8F8",
+                    "borderBottomColor": "#a7a6ab",
                     "borderBottomWidth": 0.5,
-                    "elevation": 0,
+                    "elevation": 3,
                     "flexDirection": "row",
                     "height": 64,
                     "justifyContent": "center",
@@ -694,14 +691,13 @@ exports[`todo-list enzyme tests can add a Todo with Enzyme 1`] = `
                     "paddingRight": 10,
                     "paddingTop": 18,
                     "right": 0,
-                    "shadowColor": null,
-                    "shadowOffset": null,
-                    "shadowOpacity": null,
-                    "shadowRadius": null,
+                    "shadowColor": undefined,
+                    "shadowOffset": undefined,
+                    "shadowOpacity": undefined,
+                    "shadowRadius": undefined,
                     "top": 0,
                   }
                 }
-                transparent={true}
               >
                 <Component
                   onLayout={[Function]}
@@ -714,15 +710,14 @@ exports[`todo-list enzyme tests can add a Todo with Enzyme 1`] = `
                       backgroundColor="#C6C6C6"
                       barStyle="dark-content"
                       showHideTransition="fade"
-                      translucent={true}
                     />
                     <Component
                       style={
                         Object {
-                          "backgroundColor": "transparent",
-                          "borderBottomColor": "transparent",
+                          "backgroundColor": "#F8F8F8",
+                          "borderBottomColor": "#a7a6ab",
                           "borderBottomWidth": 0.5,
-                          "elevation": 0,
+                          "elevation": 3,
                           "flexDirection": "row",
                           "height": 64,
                           "justifyContent": "center",
@@ -731,22 +726,21 @@ exports[`todo-list enzyme tests can add a Todo with Enzyme 1`] = `
                           "paddingRight": 10,
                           "paddingTop": 18,
                           "right": 0,
-                          "shadowColor": null,
-                          "shadowOffset": null,
-                          "shadowOpacity": null,
-                          "shadowRadius": null,
+                          "shadowColor": undefined,
+                          "shadowOffset": undefined,
+                          "shadowOpacity": undefined,
+                          "shadowRadius": undefined,
                           "top": 0,
                         }
                       }
-                      transparent={true}
                     >
                       <View
                         style={
                           Object {
-                            "backgroundColor": "transparent",
-                            "borderBottomColor": "transparent",
+                            "backgroundColor": "#F8F8F8",
+                            "borderBottomColor": "#a7a6ab",
                             "borderBottomWidth": 0.5,
-                            "elevation": 0,
+                            "elevation": 3,
                             "flexDirection": "row",
                             "height": 64,
                             "justifyContent": "center",
@@ -755,14 +749,13 @@ exports[`todo-list enzyme tests can add a Todo with Enzyme 1`] = `
                             "paddingRight": 10,
                             "paddingTop": 18,
                             "right": 0,
-                            "shadowColor": null,
-                            "shadowOffset": null,
-                            "shadowOpacity": null,
-                            "shadowRadius": null,
+                            "shadowColor": undefined,
+                            "shadowOffset": undefined,
+                            "shadowOpacity": undefined,
+                            "shadowRadius": undefined,
                             "top": 0,
                           }
                         }
-                        transparent={true}
                       >
                         <Styled(Body)
                           style={

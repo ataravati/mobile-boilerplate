@@ -74,7 +74,7 @@ export class TodoList extends React.Component<TodoListProps, TodoListState> {
   render() {
     return (
       <Container>
-        <Header transparent>
+        <Header>
           <Body style={{flexDirection: "row"}}>
             <Item regular style={{ flex: 1, flexGrow: 4 }}>
               <Icon name="create" />
