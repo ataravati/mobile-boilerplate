@@ -1,4 +1,4 @@
-package com.nforsmobile;
+package com.mobileboilerplate;
 
 import android.app.Application;
 
@@ -21,9 +21,7 @@ public class MainApplication extends Application implements ReactApplication {
 
     @Override
     protected List<ReactPackage> getPackages() {
-      return Arrays.<ReactPackage>asList(
-          new MainReactPackage()
-      );
+      return Arrays.<ReactPackage>asList(new MainReactPackage());
     }
 
     @Override
