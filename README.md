@@ -1,38 +1,37 @@
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
-
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
-**Table of Contents** _generated with [DocToc](https://github.com/thlorenz/doctoc)_
-
-* [mobile-boilerplate](#mobile-boilerplate)
-* [About this repo](#about-this-repo)
-* [Usage](#usage)
-  * [Getting Started](#getting-started)
-  * [General commands](#general-commands)
-  * [Tips & Tricks](#tips--tricks)
-    * [Access developer menu on your phone without shaking](#access-developer-menu-on-your-phone-without-shaking)
-  * [Issues](#issues)
-* [Modules](#modules)
-  * [Expo](#expo)
-    * [Good references](#good-references)
-    * [Recommendation for using Expo](#recommendation-for-using-expo)
-    * [Alternatives to Expo](#alternatives-to-expo)
-    * [Why use Expo](#why-use-expo)
-    * [Good list of pros and cons from Benzer1406](#good-list-of-pros-and-cons-from-benzer1406)
-    * [Why not to use Expo](#why-not-to-use-expo)
-    * [Ejecting Expo](#ejecting-expo)
-    * [Expo for Audio](#expo-for-audio)
-  * [Components](#components)
-    * [Navigation](#navigation)
-    * [Component Libraries](#component-libraries)
-    * [Resources](#resources)
-    * [Libraries](#libraries)
-    * [Boilerplate](#boilerplate)
-  * [Testing](#testing)
-    * [CI/CD / Builds](#cicd--builds)
-      * [Reference](#reference)
-      * [Tools](#tools)
-    * [Cross Platform](#cross-platform)
+- [mobile-boilerplate](#mobile-boilerplate)
+- [About this repo](#about-this-repo)
+- [React Native Boilerplate](#react-native-boilerplate)
+  - [Getting Started](#getting-started)
+    - [Installation](#installation)
+  - [General commands](#general-commands)
+  - [Tips & Tricks](#tips--tricks)
+    - [Access developer menu on your phone without shaking](#access-developer-menu-on-your-phone-without-shaking)
+  - [Issues](#issues)
+- [Best Practices and Recommendations](#best-practices-and-recommendations)
+  - [Expo](#expo)
+    - [Good references](#good-references)
+    - [Recommendation for using Expo](#recommendation-for-using-expo)
+    - [Alternatives to Expo](#alternatives-to-expo)
+    - [Why use Expo](#why-use-expo)
+    - [Good list of pros and cons from Benzer1406](#good-list-of-pros-and-cons-from-benzer1406)
+    - [Why not to use Expo](#why-not-to-use-expo)
+    - [Ejecting Expo](#ejecting-expo)
+    - [Expo for Audio](#expo-for-audio)
+  - [Components](#components)
+    - [Navigation](#navigation)
+    - [Component Libraries](#component-libraries)
+    - [Resources](#resources)
+    - [Libraries](#libraries)
+    - [Boilerplate](#boilerplate)
+  - [Testing](#testing)
+    - [CI/CD / Builds](#cicd--builds)
+      - [Reference](#reference)
+      - [Tools](#tools)
+    - [Cross Platform](#cross-platform)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -52,7 +51,7 @@ This repo is a combination of boilerplate code for new React Native mobile apps,
 
 We will continue to update the boilerplate code with the latest React Native versions, and as we adopt new libraries and best practices.
 
-# Usage
+# React Native Boilerplate
 
 ## Getting Started
 
@@ -108,7 +107,7 @@ react-native start  --reset-cache
 # Now run `react-native run-android` or `react-native run-ios
 ```
 
-# Modules
+# Best Practices and Recommendations
 
 ## Expo
 
