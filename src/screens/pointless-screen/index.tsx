@@ -1,13 +1,11 @@
 import React from "react";
 import { Text, View } from "native-base";
 
-interface TodoListProps {
-}
+interface TodoListProps {}
 
 export class PointlessScreen extends React.Component<TodoListProps, void> {
-
   static navigationOptions = {
-    title: 'Pointless Screen',
+    title: "Pointless Screen",
   };
 
   render() {

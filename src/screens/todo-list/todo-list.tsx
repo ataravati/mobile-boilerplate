@@ -15,11 +15,7 @@ import {
 } from "native-base";
 import { ScrollView, StyleSheet } from "react-native";
 import { TodoItem } from "./todo-item";
-import {
-  createStackNavigator,
-  NavigationScreenProp,
-  NavigationState,
-} from "react-navigation";
+import { NavigationScreenProp, NavigationState } from "react-navigation";
 
 import { TodoStore, Todo } from "../../stores/todo-store";
 
@@ -56,7 +52,7 @@ export class TodoList extends React.Component<TodoListProps, TodoListState> {
   };
 
   static navigationOptions = {
-    title: 'Todo List',
+    title: "Todo List",
   };
 
   destroyTodo = (todo: typeof Todo.Type) => {
@@ -74,8 +70,8 @@ export class TodoList extends React.Component<TodoListProps, TodoListState> {
   render() {
     return (
       <Container>
-        <Header>
-          <Body style={{flexDirection: "row"}}>
+        <Header style={{ backgroundColor: "white" }}>
+          <Body style={{ flexDirection: "row" }}>
             <Item regular style={{ flex: 1, flexGrow: 4 }}>
               <Icon name="create" />
               <Input
@@ -98,10 +94,14 @@ export class TodoList extends React.Component<TodoListProps, TodoListState> {
           </Body>
         </Header>
         <Content style={{ flex: 1 }}>
-          {this.props.todoStore!.isLoading ? <Spinner /> : <TodoItems
-            todos={this.props.todoStore!.todos.slice()}
-            destroyTodo={this.destroyTodo}
-          />}
+          {this.props.todoStore!.isLoading ? (
+            <Spinner />
+          ) : (
+            <TodoItems
+              todos={this.props.todoStore!.todos.slice()}
+              destroyTodo={this.destroyTodo}
+            />
+          )}
         </Content>
         <Footer style={{ flexDirection: "column", height: 100 }}>
           <Button
@@ -114,9 +114,7 @@ export class TodoList extends React.Component<TodoListProps, TodoListState> {
           </Button>
           <Button
             full
-            onPress={() =>
-              this.props.navigation.navigate("PointlessScreen")
-            }
+            onPress={() => this.props.navigation.push("NestedPointlessScreen")}
           >
             <Text>Go to a pointless screen</Text>
           </Button>

@@ -6,7 +6,9 @@ import { Button, Text, View } from "native-base";
 export function TodoItem({ destroyTodo, key, todo }) {
   return (
     <View key={key} style={styles.todo} testID="todo-item">
-      <Text testID="todo-title" style={styles.title}>{todo.title}</Text>
+      <Text testID="todo-title" style={styles.title}>
+        {todo.title}
+      </Text>
       <Button onPress={() => destroyTodo(todo)}>
         <Text>Delete</Text>
       </Button>

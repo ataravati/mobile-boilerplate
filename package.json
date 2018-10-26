@@ -1,5 +1,5 @@
 {
-  "name": "NforsMobile",
+  "name": "nfors-mobile",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -25,7 +25,9 @@
     "react": "16.5.0",
     "react-dom": "^16.5.2",
     "react-native": "0.57.2",
+    "react-native-config": "^0.11.5",
     "react-native-mock-render": "^0.1.2",
+    "react-native-sentry": "^0.39.1",
     "react-navigation": "^2.18.0"
   },
   "devDependencies": {
@@ -44,6 +46,7 @@
     "react-addons-test-utils": "^15.6.2",
     "react-native-typescript-transformer": "^1.2.10",
     "react-test-renderer": "16.5.0",
+    "schedule": "0.4.0",
     "ts-jest": "^23.10.4",
     "typescript": "^3.1.1"
   },
@@ -51,13 +54,17 @@
     "babel-core": "7.0.0-bridge.0"
   },
   "jest": {
-    "snapshotSerializers": [
-      "enzyme-to-json/serializer"
-    ]
+    "snapshotSerializers": ["enzyme-to-json/serializer"]
+  },
+  "prettier": {
+    "trailingComma": "all",
+    "tabWidth": 2,
+    "semi": true,
+    "singleQuote": false
   },
   "husky": {
     "hooks": {
-      "pre-commit": "prettier && npm test"
+      "pre-push": "prettier && npm test"
     }
   }
 }
