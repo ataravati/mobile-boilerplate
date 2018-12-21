@@ -52,7 +52,7 @@ export class TodoList extends React.Component<TodoListProps, TodoListState> {
   };
 
   static navigationOptions = {
-    title: "Todo List",
+    title: "لیست کارهای عقب‌مانده",
   };
 
   destroyTodo = (todo: typeof Todo.Type) => {
@@ -69,7 +69,7 @@ export class TodoList extends React.Component<TodoListProps, TodoListState> {
 
   render() {
     return (
-      <Container>
+      <Container style={{ direction: "rtl" }}>
         <Header style={{ backgroundColor: "white" }}>
           <Body style={{ flexDirection: "row" }}>
             <Item regular style={{ flex: 1, flexGrow: 4 }}>
@@ -89,7 +89,7 @@ export class TodoList extends React.Component<TodoListProps, TodoListState> {
                 });
               }}
             >
-              <Text>Add Todo</Text>
+              <Text>اضافه کن</Text>
             </Button>
           </Body>
         </Header>
@@ -110,13 +110,13 @@ export class TodoList extends React.Component<TodoListProps, TodoListState> {
               this.fetchTodos();
             }}
           >
-            <Text>Fetch Example Todos From API</Text>
+            <Text>بارگیری اطلاعات از API</Text>
           </Button>
           <Button
             full
             onPress={() => this.props.navigation.push("NestedPointlessScreen")}
           >
-            <Text>Go to a pointless screen</Text>
+            <Text>برو به صفحه‌ی بی‌خاصیت</Text>
           </Button>
         </Footer>
       </Container>

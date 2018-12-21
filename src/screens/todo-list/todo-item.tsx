@@ -10,7 +10,7 @@ export function TodoItem({ destroyTodo, key, todo }) {
         {todo.title}
       </Text>
       <Button onPress={() => destroyTodo(todo)}>
-        <Text>Delete</Text>
+        <Text>حذف</Text>
       </Button>
     </View>
   );
@@ -19,6 +19,7 @@ export function TodoItem({ destroyTodo, key, todo }) {
 const styles = StyleSheet.create({
   title: {
     maxWidth: "70%",
+    writingDirection: "rtl"
   },
   todo: {
     flex: 1,

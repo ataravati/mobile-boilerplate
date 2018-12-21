@@ -38,7 +38,7 @@ const DrawerNavigator = createDrawerNavigator(
             screen: TodoList,
             navigationOptions: ({ navigation }) => ({
               ...withDrawerButton(navigation),
-              drawerLabel: "Pointless Screen",
+              drawerLabel: "صفحه‌ی بی‌خاصیت",
             }),
           },
           NestedPointlessScreen: { screen: PointlessScreen },
@@ -49,7 +49,7 @@ const DrawerNavigator = createDrawerNavigator(
       ),
       navigationOptions: ({ navigation }) => ({
         ...withDrawerButton(navigation),
-        drawerLabel: "Todo List",
+        drawerLabel: "لسیت کارهای عقب‌مانده",
       }),
     },
     PointlessScreen: {
@@ -68,7 +68,7 @@ const DrawerNavigator = createDrawerNavigator(
       ),
       navigationOptions: ({ navigation }) => ({
         ...withDrawerButton(navigation),
-        drawerLabel: "Pointless Screen",
+        drawerLabel: "صفحه‌ی بی‌خاصیت",
       }),
     },
   },

@@ -5,13 +5,13 @@ interface TodoListProps {}
 
 export class PointlessScreen extends React.Component<TodoListProps, void> {
   static navigationOptions = {
-    title: "Pointless Screen",
+    title: "صفحه‌ی بی‌خاصیت",
   };
 
   render() {
     return (
       <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-        <Text>I'm so worthless</Text>
+        <Text>من به هیچ دردی نمی‌خورم.</Text>
       </View>
     );
   }
