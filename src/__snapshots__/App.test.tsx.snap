@@ -103,11 +103,16 @@ exports[`app can render snapshot 1`] = `
           >
             <View
               style={
-                Object {
-                  "backgroundColor": "#fff",
-                  "flex": 1,
-                  "height": 1334,
-                }
+                Array [
+                  Object {
+                    "backgroundColor": "#fff",
+                    "flex": 1,
+                    "height": 1334,
+                  },
+                  Object {
+                    "direction": "rtl",
+                  },
+                ]
               }
             >
               <View
@@ -284,7 +289,7 @@ exports[`app can render snapshot 1`] = `
                         }
                         uppercase={false}
                       >
-                        Add Todo
+                        اضافه کن
                       </Text>
                     </View>
                   </View>
@@ -428,7 +433,7 @@ exports[`app can render snapshot 1`] = `
                     }
                     uppercase={false}
                   >
-                    Fetch Example Todos From API
+                    بارگیری اطلاعات از API
                   </Text>
                 </View>
                 <View
@@ -481,7 +486,7 @@ exports[`app can render snapshot 1`] = `
                     }
                     uppercase={false}
                   >
-                    Go to a pointless screen
+                    برو به صفحه‌ی بی‌خاصیت
                   </Text>
                 </View>
               </View>
@@ -580,7 +585,7 @@ exports[`app can render snapshot 1`] = `
                         }
                       }
                     >
-                      Todo List
+                      لیست کارهای عقب‌مانده
                     </Text>
                   </View>
                   <View
@@ -788,7 +793,7 @@ exports[`app can render snapshot 1`] = `
                         ]
                       }
                     >
-                      Todo List
+                      لسیت کارهای عقب‌مانده
                     </Text>
                   </View>
                 </View>
@@ -847,7 +852,7 @@ exports[`app can render snapshot 1`] = `
                         ]
                       }
                     >
-                      Pointless Screen
+                      صفحه‌ی بی‌خاصیت
                     </Text>
                   </View>
                 </View>
