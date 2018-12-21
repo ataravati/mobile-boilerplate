@@ -11,6 +11,8 @@ import com.facebook.soloader.SoLoader;
 import java.util.Arrays;
 import java.util.List;
 
+import com.facebook.react.modules.i18nmanager.I18nUtil;
+
 public class MainApplication extends Application implements ReactApplication {
 
   private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
@@ -38,6 +40,12 @@ public class MainApplication extends Application implements ReactApplication {
   @Override
   public void onCreate() {
     super.onCreate();
+
+    // Force RTL...
+    I18nUtil sharedI18nUtilInstance = I18nUtil.getInstance(); 
+    sharedI18nUtilInstance.allowRTL(this, true);
+    sharedI18nUtilInstance.forceRTL(this, true); 
+
     SoLoader.init(this, /* native exopackage */ false);
   }
 }

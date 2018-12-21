@@ -16,6 +16,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
   
+  // Force RTL...
   [[RCTI18nUtil sharedInstance] allowRTL:YES]; 
   [[RCTI18nUtil sharedInstance] forceRTL:YES]; 
 
