@@ -1,4 +1,5 @@
 import React from "react";
+import { Platform } from "react-native";
 import { Icon, View } from "native-base";
 import { Provider } from "mobx-react";
 import { createDrawerNavigator, createStackNavigator } from "react-navigation";
@@ -77,7 +78,7 @@ const DrawerNavigator = createDrawerNavigator(
     contentOptions: {
       activeTintColor: "#e91e63",
     },
-    drawerPosition: "left",
+    drawerPosition: Platform.OS === "ios" ? "left" : "right",
     navigationOptions: {
       headerStyle: {
         backgroundColor: "#f4511e",

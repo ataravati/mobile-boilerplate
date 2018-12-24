@@ -1,17 +1,8 @@
 import React from "react";
-import { Text, Button, View } from "native-base";
-import Sound from "react-native-sound";
-
-Sound.setActive(true);
-Sound.setCategory("Playback", true);
+import { View } from "native-base";
+import AudioPlayer from "./audio-player";
 
 interface TodoListProps {}
-const sound = new Sound('sample_audio.mp3', Sound.MAIN_BUNDLE, (error) => {
-  if (error) {
-    console.log('Failed to load the sound.', error);
-    return;
-  }
-});
 
 export class PointlessScreen extends React.Component<TodoListProps, void> {
   static navigationOptions = {
@@ -21,34 +12,8 @@ export class PointlessScreen extends React.Component<TodoListProps, void> {
   render() {
     return (
       <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-        <Button onPress={() => this.play()}>
-          <Text>Play</Text>
-        </Button>
-        <Button onPress={() => this.pause()}>
-          <Text>Pause</Text>
-        </Button>
-        <Button onPress={() => this.stop()}>
-          <Text>Stop</Text>
-        </Button>
+        <AudioPlayer filename="sample_audio.mp3" />
       </View>
     );
-  }
-
-  play() {
-    if(sound) {
-      sound.play();
-    }
-  }
-
-  pause() {
-    if(sound) {
-      sound.pause();
-    }
-  }
-
-  stop() {
-    if(sound) {
-      sound.stop();
-    }
   }
 }
