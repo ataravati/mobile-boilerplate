@@ -6,7 +6,7 @@ Sound.setActive(true);
 Sound.setCategory("Playback", true);
 
 interface TodoListProps {}
-const sound = new Sound('SampleAudio.mp3', Sound.MAIN_BUNDLE, (error) => {
+const sound = new Sound('sample_audio.mp3', Sound.MAIN_BUNDLE, (error) => {
   if (error) {
     console.log('Failed to load the sound.', error);
     return;
