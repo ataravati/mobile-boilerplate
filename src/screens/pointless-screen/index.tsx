@@ -12,7 +12,7 @@ export class PointlessScreen extends React.Component<TodoListProps, void> {
   render() {
     return (
       <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-        <AudioPlayer filename="sample_audio.mp3" />
+        <AudioPlayer filename="https://host2.rjmusicmedia.com/media/mp3/mp3-256/Sasy-Che-Pesari.mp3" />
       </View>
     );
   }
