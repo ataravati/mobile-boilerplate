@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { View, Text, Button } from "native-base";
-import { Slider } from "react-native";
+import { ActivityIndicator, Slider } from "react-native";
 import Sound from "react-native-sound";
 import { Platform } from "react-native";
 
@@ -14,6 +14,7 @@ export interface AudioPlayerProps {
 }
 
 export interface AudioPlayerState {
+  isLoaded: boolean;
   isPlaying: boolean;
   duration: number;
   currentTime: number;
@@ -28,60 +29,83 @@ export default class AudioPlayer extends React.Component<
       console.log("Failed to load the sound.", error);
       return;
     }
+
+    this.setState({ isLoaded: true, duration: this.sound.getDuration() });
   });
 
-  state = { isPlaying: false, duration: -1, currentTime: 0 };
+  state = { isLoaded: false, isPlaying: false, duration: -1, currentTime: 0 };
 
   seekTimer = setInterval(() => {
     this.sound.getCurrentTime((seconds, isPlaying) => {
-      if (isPlaying === true)
-        this.setState({ currentTime: Math.floor(seconds) });
+      if (isPlaying === true) {
+        seconds = seconds > this.state.duration ? this.state.duration : seconds;
+        this.setState({ currentTime: seconds });
+      }
     });
   }, 250);
 
-  handlePlay = () => {
-    if (this.state.isPlaying === false) {
-      if (this.sound.isLoaded()) {
-        this.setState({
-          isPlaying: true,
-          duration: Math.floor(this.sound.getDuration()),
-        });
-        if (Platform.OS === "ios") Sound.setActive(true);
+  onPressPlay = () => {
+    this.state.isPlaying === false ? this.play() : this.pause();
+  };
 
-        this.sound.play((success?) => {
-          this.setState({ isPlaying: false });
-          if (Platform.OS === "ios") {
-            Sound.setActive(false);
-          }
-          if (!success) {
-            if (Platform.OS === "android") this.sound.reset();
-          }
-        });
-      }
-    } else {
-      this.sound.pause(() => {
+  play() {
+    if (this.sound.isLoaded()) {
+      this.setState({ isPlaying: true });
+      if (Platform.OS === "ios") Sound.setActive(true);
+
+      this.sound.play((success?) => {
         this.setState({ isPlaying: false });
+        if (Platform.OS === "ios") Sound.setActive(false);
+        if (!success && Platform.OS === "android") this.sound.reset();
       });
     }
+  }
+
+  pause() {
+    this.sound.pause(() => {
+      this.setState({ isPlaying: false });
+    });
+  }
+
+  onSeek = time => {
+    this.sound.setCurrentTime(time);
+    this.setState({ currentTime: time });
+    this.play();
   };
 
   render() {
     return (
-      <View
-        style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
-      >
+      <View style={{ flex: 1, justifyContent: "flex-end" }}>
+        <ActivityIndicator
+          size="large"
+          color="#0000ff"
+          animating={!this.state.isLoaded}
+        />
         <View>
-          <Button onPress={this.handlePlay}>
-            <Text>{this.state.isPlaying === false ? "Play" : "Pause"}</Text>
-          </Button>
-        </View>
-        <View>
-          <Text>Duration: {this.formatTime(this.state.duration)}</Text>
-          <Text>Current Time: {this.formatTime(this.state.currentTime)}</Text>
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Button onPress={this.onPressPlay} disabled={!this.state.isLoaded}>
+              <Text>{this.state.isPlaying === false ? "Play" : "Pause"}</Text>
+            </Button>
+          </View>
+          <View style={{ flexDirection: "row", direction: "ltr" }}>
+            <Text>Elapsed: {this.formatTime(this.state.currentTime)}</Text>
+            <Text style={{ marginStart: 20 }}>
+              Remaining:{" "}
+              {this.formatTime(this.state.duration - this.state.currentTime)}
+            </Text>
+          </View>
           <Slider
             style={{ direction: "ltr", marginTop: 10 }}
             maximumValue={this.getSliderMaxValue()}
             value={this.state.currentTime}
+            onTouchStart={() => this.pause()}
+            onSlidingComplete={value => this.onSeek(value)}
           />
         </View>
       </View>
@@ -98,7 +122,7 @@ export default class AudioPlayer extends React.Component<
     let result = "";
     const hours = Math.floor(time / 3600);
     const minutes = Math.floor((time % 3600) / 60);
-    const seconds = time % 60;
+    const seconds = Math.floor(time % 60);
 
     if (hours > 0) result += hours + ":";
 
@@ -108,9 +132,7 @@ export default class AudioPlayer extends React.Component<
   }
 
   padZero(number) {
-    if (number < 10) {
-      return "0" + number;
-    }
+    if (number < 10) return "0" + number;
     return number;
   }
 }
