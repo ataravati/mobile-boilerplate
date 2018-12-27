@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, Button } from "native-base";
-import { ActivityIndicator, Slider } from "react-native";
+import { View, Text, Button, Spinner } from "native-base";
 import Sound from "react-native-sound";
 import { Platform } from "react-native";
 import SeekBar from "./seek-bar";
@@ -76,12 +75,9 @@ export default class AudioPlayer extends React.Component<
   render() {
     return (
       <View style={{ flex: 1, justifyContent: "center" }}>
-        <ActivityIndicator
-          size="large"
-          color="#0000ff"
-          animating={!this.state.isLoaded}
-        />
-        {this.state.isLoaded && (
+        {!this.state.isLoaded ? (
+          <Spinner />
+        ) : (
           <View style={{ flex: 1, justifyContent: "flex-end" }}>
             <View
               style={{
