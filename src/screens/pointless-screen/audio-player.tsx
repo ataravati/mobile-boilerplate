@@ -1,81 +1,53 @@
 import React, { Component } from "react";
+import { inject, observer } from "mobx-react/native";
 import { View, Text, Button, Spinner } from "native-base";
-import Sound from "react-native-sound";
-import { Platform } from "react-native";
 import SeekBar from "./seek-bar";
-
-Sound.setCategory("Playback", true);
-if (Platform.OS === "ios") {
-  Sound.setMode("SpokenAudio");
-}
+import { AudioPlayerStore } from "../../stores/audio-player-store";
 
 export interface AudioPlayerProps {
   filename: string;
+  audioPlayerStore: AudioPlayerStore;
 }
 
-export interface AudioPlayerState {
-  isLoaded: boolean;
-  isPlaying: boolean;
-  duration: number;
-  currentTime: number;
-}
+export interface AudioPlayerState {}
 
-export default class AudioPlayer extends React.Component<
+@inject("audioPlayerStore")
+@observer
+export default class AudioPlayer extends Component<
   AudioPlayerProps,
   AudioPlayerState
 > {
-  private sound = new Sound(this.props.filename, "", error => {
-    if (error) {
-      console.log("Failed to load the sound.", error);
-      return;
-    }
-
-    this.setState({ isLoaded: true, duration: this.sound.getDuration() });
-  });
-
-  state = { isLoaded: false, isPlaying: false, duration: -1, currentTime: 0 };
+  constructor(props: AudioPlayerProps) {
+    super(props);
+    this.props.audioPlayerStore.load(this.props.filename);
+  }
 
   seekTimer = setInterval(() => {
-    this.sound.getCurrentTime((seconds, isPlaying) => {
-      if (isPlaying === true) {
-        seconds = seconds > this.state.duration ? this.state.duration : seconds;
-        this.setState({ currentTime: seconds });
-      }
-    });
+    if (this.props.audioPlayerStore.isLoading === false) {
+      this.props.audioPlayerStore.updateCurrentTime();
+    }
   }, 250);
 
   onPressPlay = () => {
-    this.state.isPlaying === false ? this.play() : this.pause();
+    this.props.audioPlayerStore.paused === true ? this.play() : this.pause();
   };
 
   play() {
-    if (this.sound.isLoaded()) {
-      this.setState({ isPlaying: true });
-      if (Platform.OS === "ios") Sound.setActive(true);
-
-      this.sound.play((success?) => {
-        this.setState({ isPlaying: false });
-        if (Platform.OS === "ios") Sound.setActive(false);
-        if (!success && Platform.OS === "android") this.sound.reset();
-      });
-    }
+    this.props.audioPlayerStore.play();
   }
 
   pause() {
-    this.sound.pause(() => {
-      this.setState({ isPlaying: false });
-    });
+    this.props.audioPlayerStore.pause();
   }
 
-  onSeek = time => {
-    this.sound.setCurrentTime(time);
-    this.setState({ currentTime: time });
+  onSeek = (time: number) => {
+    this.props.audioPlayerStore.setCurrentTime(time);
   };
 
   render() {
     return (
       <View style={{ flex: 1, justifyContent: "center" }}>
-        {!this.state.isLoaded ? (
+        {this.props.audioPlayerStore.isLoading === true ? (
           <Spinner />
         ) : (
           <View style={{ flex: 1, justifyContent: "flex-end" }}>
@@ -86,17 +58,18 @@ export default class AudioPlayer extends React.Component<
                 justifyContent: "center",
               }}
             >
-              <Button
-                onPress={this.onPressPlay}
-                disabled={!this.state.isLoaded}
-              >
-                <Text>{this.state.isPlaying === false ? "Play" : "Pause"}</Text>
+              <Button onPress={this.onPressPlay}>
+                <Text>
+                  {this.props.audioPlayerStore.paused === true
+                    ? "Play"
+                    : "Pause"}
+                </Text>
               </Button>
             </View>
             <SeekBar
-              duration={this.state.duration}
-              currentTime={this.state.currentTime}
-              onSeek={time => this.onSeek(time)}
+              duration={this.props.audioPlayerStore.duration}
+              currentTime={this.props.audioPlayerStore.currentTime}
+              onSeek={(time: number) => this.onSeek(time)}
               onPlay={() => this.play()}
               onPause={() => this.pause()}
             />
@@ -105,8 +78,4 @@ export default class AudioPlayer extends React.Component<
       </View>
     );
   }
-
-  // componentWillUnmount() {
-  //   this.sound.release();
-  // }
 }
