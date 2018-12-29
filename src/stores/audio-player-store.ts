@@ -1,4 +1,4 @@
-import { types, onSnapshot, flow } from "mobx-state-tree";
+import { types, onSnapshot, flow, applySnapshot } from "mobx-state-tree";
 import Sound from "react-native-sound";
 import { Platform } from "react-native";
 
@@ -7,9 +7,9 @@ if (Platform.OS === "ios") {
   Sound.setMode("SpokenAudio");
 }
 
-const sounds = {};
+const track = {};
 
-function loadSound(filename: string) {
+function load(filename: string) {
   return new Promise(function(resolve, reject) {
     const sound = new Sound(filename, "", function(error) {
       if (error) {
@@ -23,7 +23,7 @@ function loadSound(filename: string) {
 
 function play(filename: string) {
   return new Promise(function(resolve, reject) {
-    sounds[filename].play(function(success?: boolean) {
+    track[filename].play(function(success?: boolean) {
       if (success === true) {
         resolve();
       } else {
@@ -35,7 +35,7 @@ function play(filename: string) {
 
 function getCurrentTime(filename: string) {
   return new Promise(function(resolve, reject) {
-    sounds[filename].getCurrentTime(function(
+    track[filename].getCurrentTime(function(
       seconds: number,
       isPlaying: boolean,
     ) {
@@ -59,11 +59,20 @@ const AudioPlayerStoreModel = types
   .actions(self => ({
     load: flow(function*(filename: string) {
       self.isLoading = true;
+      if (self.filename && filename !== self.filename) {
+        track[self.filename].release();
+        self.paused = true;
+        self.currentTime = 0;
+      }
       try {
-        sounds[filename] = yield loadSound(filename);
+        track[filename] =
+          track[filename] && track[filename].isLoaded() === true
+            ? track[filename]
+            : yield load(filename);
+
         self.isLoading = false;
         self.filename = filename;
-        self.duration = sounds[filename].getDuration();
+        self.duration = track[filename].getDuration();
       } catch (error) {
         console.log("Failed to load the audio file.", error);
       }
@@ -72,7 +81,7 @@ const AudioPlayerStoreModel = types
       self.paused = paused;
     },
     play: flow(function*() {
-      if (sounds[self.filename].isLoaded()) {
+      if (track[self.filename].isLoaded()) {
         self.paused = false;
         if (Platform.OS === "ios") Sound.setActive(true);
 
@@ -81,12 +90,12 @@ const AudioPlayerStoreModel = types
           self.paused = true;
           if (Platform.OS === "ios") Sound.setActive(false);
         } catch {
-          if (Platform.OS === "android") sounds[self.filename].reset();
+          if (Platform.OS === "android") track[self.filename].reset();
         }
       }
     }),
     pause() {
-      sounds[self.filename].pause();
+      track[self.filename].pause();
       self.paused = true;
     },
     updateCurrentTime: flow(function*() {
@@ -97,7 +106,7 @@ const AudioPlayerStoreModel = types
       } catch {}
     }),
     setCurrentTime(time: number) {
-      sounds[self.filename].setCurrentTime(time);
+      track[self.filename].setCurrentTime(time);
       self.currentTime = time;
     },
   }));

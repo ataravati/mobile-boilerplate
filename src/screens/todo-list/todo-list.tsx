@@ -103,7 +103,7 @@ export class TodoList extends React.Component<TodoListProps, TodoListState> {
             />
           )}
         </Content>
-        <Footer style={{ flexDirection: "column", height: 100 }}>
+        <Footer style={{ flexDirection: "column", height: 150 }}>
           <Button
             full
             onPress={() => {
@@ -114,9 +114,25 @@ export class TodoList extends React.Component<TodoListProps, TodoListState> {
           </Button>
           <Button
             full
-            onPress={() => this.props.navigation.push("NestedPointlessScreen")}
+            onPress={() =>
+              this.props.navigation.push("NestedPointlessScreen", {
+                filename:
+                  "http://feeds.soundcloud.com/stream/247409391-tehranpodcast-lfuo5sqr9aby.mp3",
+              })
+            }
           >
-            <Text>برو به صفحه‌ی بی‌خاصیت</Text>
+            <Text>فصل دوم - قسمت ۵ - کاش اینجا بودی</Text>
+          </Button>
+          <Button
+            full
+            onPress={() =>
+              this.props.navigation.push("NestedPointlessScreen", {
+                filename:
+                  "http://feeds.soundcloud.com/stream/325004379-tehranpodcast-hermes09.mp3",
+              })
+            }
+          >
+            <Text>مستند صوتی «بازیِ گوش» قسمت نهم</Text>
           </Button>
         </Footer>
       </Container>

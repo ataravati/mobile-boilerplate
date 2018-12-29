@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { inject, observer } from "mobx-react/native";
 import { View, Text, Button, Spinner } from "native-base";
 import SeekBar from "./seek-bar";
@@ -13,7 +13,7 @@ export interface AudioPlayerState {}
 
 @inject("audioPlayerStore")
 @observer
-export default class AudioPlayer extends Component<
+export default class AudioPlayer extends React.Component<
   AudioPlayerProps,
   AudioPlayerState
 > {
@@ -77,5 +77,9 @@ export default class AudioPlayer extends Component<
         )}
       </View>
     );
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.seekTimer);
   }
 }
