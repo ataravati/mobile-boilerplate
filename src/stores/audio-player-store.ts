@@ -1,60 +1,9 @@
-import {
-  types,
-  onSnapshot,
-  flow,
-  applySnapshot,
-  getSnapshot,
-} from "mobx-state-tree";
-import Sound from "react-native-sound";
-import { Platform } from "react-native";
+import { types, onSnapshot, flow, getSnapshot } from "mobx-state-tree";
+import AudioPlayer from "./audio-player";
 
-Sound.setCategory("Playback", true);
-if (Platform.OS === "ios") {
-  Sound.setMode("SpokenAudio");
-}
-
-const tracks = {};
 const snapshots = {};
 
-function load(filename: string, time: number = 0) {
-  return new Promise(function(resolve, reject) {
-    const sound = new Sound(filename, "", function(error) {
-      if (error) {
-        reject(error);
-      } else {
-        if (time > 0) sound.setCurrentTime(time);
-        resolve(sound);
-      }
-    });
-  });
-}
-
-function play(filename: string) {
-  return new Promise(function(resolve, reject) {
-    tracks[filename].play(function(success?: boolean) {
-      if (success === true) {
-        resolve();
-      } else {
-        reject();
-      }
-    });
-  });
-}
-
-function getCurrentTime(filename: string) {
-  return new Promise(function(resolve, reject) {
-    tracks[filename].getCurrentTime(function(
-      seconds: number,
-      isPlaying: boolean,
-    ) {
-      if (isPlaying === true) {
-        resolve(seconds);
-      } else {
-        reject();
-      }
-    });
-  });
-}
+const audioPlayer = new AudioPlayer();
 
 const AudioPlayerStoreModel = types
   .model("AudioPlayerStore", {
@@ -67,56 +16,54 @@ const AudioPlayerStoreModel = types
   .actions(self => ({
     load: flow(function*(filename: string) {
       self.isLoading = true;
+      // If the track has changed...
       if (self.filename && filename !== self.filename) {
-        self.currentTime = yield getCurrentTime(self.filename);
+        self.currentTime = yield audioPlayer.getCurrentTime();
         snapshots[self.filename] = getSnapshot(self);
-        tracks[self.filename].release();
-        tracks[self.filename] = null;
+        audioPlayer.release();
 
         self.currentTime = snapshots[filename]
           ? snapshots[filename].currentTime
           : 0;
+
         self.paused = true;
       }
+
       try {
-        tracks[filename] = tracks[filename]
-          ? tracks[filename]
-          : yield load(filename, self.currentTime);
+        // If it's a new track...
+        if (!self.filename || self.filename !== filename)
+          yield audioPlayer.load(filename, self.currentTime);
 
         self.isLoading = false;
         self.filename = filename;
-        self.duration = tracks[filename].getDuration();
+        self.duration = audioPlayer.getDuration();
       } catch (error) {
         console.log("Failed to load the audio file.", error);
       }
     }),
     play: flow(function*() {
-      if (tracks[self.filename].isLoaded()) {
+      if (audioPlayer.isLoaded()) {
         self.paused = false;
-        if (Platform.OS === "ios") Sound.setActive(true);
 
         try {
-          yield play(self.filename);
+          yield audioPlayer.play();
           self.paused = true;
-          if (Platform.OS === "ios") Sound.setActive(false);
-        } catch {
-          if (Platform.OS === "android") tracks[self.filename].reset();
-        }
+        } catch {}
       }
     }),
     pause() {
-      tracks[self.filename].pause();
+      audioPlayer.pause();
       self.paused = true;
     },
     updateCurrentTime: flow(function*() {
       try {
-        let seconds = yield getCurrentTime(self.filename);
-        seconds = seconds > self.duration ? self.duration : seconds;
-        self.currentTime = seconds;
+        let currentTime = yield audioPlayer.getCurrentTime();
+        currentTime = currentTime > self.duration ? self.duration : currentTime;
+        self.currentTime = currentTime;
       } catch {}
     }),
     setCurrentTime(time: number) {
-      tracks[self.filename].setCurrentTime(time);
+      audioPlayer.setCurrentTime(time);
       self.currentTime = time;
     },
   }));
