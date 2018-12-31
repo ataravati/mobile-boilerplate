@@ -59,14 +59,10 @@ export default class AudioPlayer {
   };
 
   getCurrentTime = () => {
-    return new Promise((resolve, reject) => {
+    return new Promise(resolve => {
       sounds[this.filename].getCurrentTime(
         (seconds: number, isPlaying: boolean) => {
-          if (isPlaying === true) {
-            resolve(seconds);
-          } else {
-            reject();
-          }
+          resolve({ seconds, isPlaying });
         },
       );
     });

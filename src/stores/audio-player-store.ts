@@ -18,7 +18,7 @@ const AudioPlayerStoreModel = types
       self.isLoading = true;
       // If the track has changed...
       if (self.filename && filename !== self.filename) {
-        self.currentTime = yield audioPlayer.getCurrentTime();
+        self.currentTime = (yield audioPlayer.getCurrentTime()).seconds;
         snapshots[self.filename] = getSnapshot(self);
         audioPlayer.release();
 
@@ -57,7 +57,7 @@ const AudioPlayerStoreModel = types
     },
     updateCurrentTime: flow(function*() {
       try {
-        let currentTime = yield audioPlayer.getCurrentTime();
+        let currentTime = (yield audioPlayer.getCurrentTime()).seconds;
         currentTime = currentTime > self.duration ? self.duration : currentTime;
         self.currentTime = currentTime;
       } catch {}
