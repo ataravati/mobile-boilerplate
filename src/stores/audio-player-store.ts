@@ -68,6 +68,7 @@ const AudioPlayerStoreModel = types
     load: flow(function*(filename: string) {
       self.isLoading = true;
       if (self.filename && filename !== self.filename) {
+        self.currentTime = yield getCurrentTime(self.filename);
         snapshots[self.filename] = getSnapshot(self);
         tracks[self.filename].release();
         tracks[self.filename] = null;

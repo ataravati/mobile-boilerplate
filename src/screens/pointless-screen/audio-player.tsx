@@ -22,7 +22,7 @@ export default class AudioPlayer extends React.Component<
     this.props.audioPlayerStore.load(this.props.filename);
   }
 
-  seekTimer = setInterval(() => {
+  trackInterval = setInterval(() => {
     if (this.props.audioPlayerStore.isLoading === false) {
       this.props.audioPlayerStore.updateCurrentTime();
     }
@@ -80,6 +80,6 @@ export default class AudioPlayer extends React.Component<
   }
 
   componentWillUnmount() {
-    clearInterval(this.seekTimer);
+    clearInterval(this.trackInterval);
   }
 }
