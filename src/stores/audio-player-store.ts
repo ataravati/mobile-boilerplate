@@ -57,9 +57,13 @@ const AudioPlayerStoreModel = types
     },
     updateCurrentTime: flow(function*() {
       try {
-        let currentTime = (yield audioPlayer.getCurrentTime()).seconds;
-        currentTime = currentTime > self.duration ? self.duration : currentTime;
-        self.currentTime = currentTime;
+        let response = yield audioPlayer.getCurrentTime();
+        if (response.isPlaying === true) {
+          let currentTime = response.seconds;
+          currentTime =
+            currentTime > self.duration ? self.duration : currentTime;
+          self.currentTime = currentTime;
+        }
       } catch {}
     }),
     setCurrentTime(time: number) {
