@@ -26,9 +26,9 @@ const SeekBar = ({ duration, currentTime, onSeek, onPlay, onPause }) => {
   const remaining = formatTime(currentTime - duration);
   return (
     <View>
-      <View style={{ flexDirection: "row", direction: "ltr" }}>
-        <Text>Elapsed: {elapsed}</Text>
-        <Text style={{ marginStart: 20 }}>Remaining: {remaining}</Text>
+      <View style={{ flexDirection: "row" }}>
+        <Text>Remaining: {remaining}</Text>
+        <Text style={{ marginStart: 20 }}>Elapsed: {elapsed}</Text>
       </View>
       <Slider
         style={{ direction: "ltr", marginTop: 10 }}
