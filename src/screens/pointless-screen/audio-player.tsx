@@ -45,6 +45,10 @@ export default class AudioPlayer extends React.Component<
     this.props.audioPlayerStore.setCurrentTime(time);
   };
 
+  setVolume = (volume: number) => {
+    this.props.audioPlayerStore.setVolume(volume);
+  };
+
   render() {
     return (
       <View style={{ flex: 1, justifyContent: "center" }}>
@@ -54,7 +58,9 @@ export default class AudioPlayer extends React.Component<
           <View style={{ flex: 1, justifyContent: "flex-end" }}>
             <Controls
               paused={this.props.audioPlayerStore.paused}
+              volume={this.props.audioPlayerStore.volume}
               onPressPlay={() => this.onPressPlay()}
+              onVolumeChange={(volume: number) => this.setVolume(volume)}
             />
             <SeekBar
               duration={this.props.audioPlayerStore.duration}

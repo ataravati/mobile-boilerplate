@@ -12,6 +12,7 @@ const AudioPlayerStoreModel = types
     filename: types.string,
     duration: types.number,
     currentTime: types.number,
+    volume: types.number,
   })
   .actions(self => ({
     load: flow(function*(filename: string) {
@@ -25,6 +26,7 @@ const AudioPlayerStoreModel = types
         self.currentTime = snapshots[filename]
           ? snapshots[filename].currentTime
           : 0;
+        self.volume = snapshots[filename] ? snapshots[filename].volume : 1;
 
         self.paused = true;
       }
@@ -32,7 +34,7 @@ const AudioPlayerStoreModel = types
       try {
         // If it's a new track...
         if (!self.filename || self.filename !== filename)
-          yield audioPlayer.load(filename, self.currentTime);
+          yield audioPlayer.load(filename, self.currentTime, self.volume);
 
         self.isLoading = false;
         self.filename = filename;
@@ -70,6 +72,10 @@ const AudioPlayerStoreModel = types
       audioPlayer.setCurrentTime(time);
       self.currentTime = time;
     },
+    setVolume(volume: number) {
+      audioPlayer.setVolume(volume);
+      self.volume = volume;
+    },
   }));
 
 export const audioPlayerStore = AudioPlayerStoreModel.create({
@@ -78,6 +84,7 @@ export const audioPlayerStore = AudioPlayerStoreModel.create({
   filename: "",
   duration: -1,
   currentTime: 0,
+  volume: 1,
 });
 
 onSnapshot(audioPlayerStore, snapshot => {

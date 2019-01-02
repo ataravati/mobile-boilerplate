@@ -1,5 +1,6 @@
 import Sound from "react-native-sound";
 import { Platform } from "react-native";
+import { number } from "mobx-state-tree/dist/internal";
 
 Sound.setCategory("Playback", true);
 if (Platform.OS === "ios") {
@@ -11,7 +12,7 @@ const sounds = {};
 export default class AudioPlayer {
   private filename = "";
 
-  load = (filename: string, time: number = 0) => {
+  load = (filename: string, time: number = 0, volume: number = 1) => {
     const that = this;
     return new Promise((resolve, reject) => {
       const sound = new Sound(filename, "", function(error) {
@@ -19,6 +20,7 @@ export default class AudioPlayer {
           reject(error);
         } else {
           if (time > 0) sound.setCurrentTime(time);
+          sound.setVolume(volume);
           sounds[filename] = sound;
           that.filename = filename;
           resolve();
@@ -75,5 +77,13 @@ export default class AudioPlayer {
   release = () => {
     sounds[this.filename].release();
     sounds[this.filename] = null;
+  };
+
+  getVolume = () => {
+    return sounds[this.filename].getVolume();
+  };
+
+  setVolume = (volume: number) => {
+    sounds[this.filename].setVolume(volume);
   };
 }
