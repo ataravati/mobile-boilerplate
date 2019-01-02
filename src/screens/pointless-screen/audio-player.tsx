@@ -1,7 +1,8 @@
 import React from "react";
 import { inject, observer } from "mobx-react/native";
-import { View, Text, Button, Spinner } from "native-base";
+import { View, Spinner } from "native-base";
 import SeekBar from "./seek-bar";
+import Controls from "./controls";
 import { AudioPlayerStore } from "../../stores/audio-player-store";
 
 export interface AudioPlayerProps {
@@ -51,27 +52,16 @@ export default class AudioPlayer extends React.Component<
           <Spinner />
         ) : (
           <View style={{ flex: 1, justifyContent: "flex-end" }}>
-            <View
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <Button onPress={this.onPressPlay}>
-                <Text>
-                  {this.props.audioPlayerStore.paused === true
-                    ? "Play"
-                    : "Pause"}
-                </Text>
-              </Button>
-            </View>
+            <Controls
+              paused={this.props.audioPlayerStore.paused}
+              onPressPlay={() => this.onPressPlay()}
+            />
             <SeekBar
               duration={this.props.audioPlayerStore.duration}
               currentTime={this.props.audioPlayerStore.currentTime}
               onSeek={(time: number) => this.onSeek(time)}
-              onPlay={() => this.play()}
-              onPause={() => this.pause()}
+              onResponderMove={() => this.pause()}
+              onResponderRelease={() => this.play()}
             />
           </View>
         )}

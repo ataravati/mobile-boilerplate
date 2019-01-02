@@ -21,7 +21,7 @@ const padZero = (number: number) => {
   return number;
 };
 
-const SeekBar = ({ duration, currentTime, onSeek, onPlay, onPause }) => {
+const SeekBar = ({ duration, currentTime, onSeek, onResponderMove, onResponderRelease }) => {
   const elapsed = formatTime(currentTime);
   const remaining = formatTime(currentTime - duration);
   return (
@@ -34,8 +34,8 @@ const SeekBar = ({ duration, currentTime, onSeek, onPlay, onPause }) => {
         style={{ direction: "ltr", marginTop: 10 }}
         maximumValue={Math.max(1, duration, currentTime)}
         value={currentTime}
-        onResponderMove={() => onPause()}
-        onResponderRelease={() => onPlay()}
+        onResponderMove={() => onResponderMove()}
+        onResponderRelease={() => onResponderRelease()}
         onSlidingComplete={value => onSeek(value)}
       />
     </View>
