@@ -15,7 +15,9 @@ export default class AudioPlayer {
   load = (filename: string, time: number = 0, volume: number = 1) => {
     const that = this;
     return new Promise((resolve, reject) => {
-      const sound = new Sound(filename, "", function(error) {
+      const basePath =
+        filename.startsWith("http") === true ? "" : Sound.MAIN_BUNDLE;
+      const sound = new Sound(filename, basePath, function(error) {
         if (error) {
           reject(error);
         } else {

@@ -127,8 +127,8 @@ export class TodoList extends React.Component<TodoListProps, TodoListState> {
             full
             onPress={() =>
               this.props.navigation.push("NestedPointlessScreen", {
-                filename:
-                  "http://feeds.soundcloud.com/stream/325004379-tehranpodcast-hermes09.mp3",
+                filename: "sample_audio.mp3",
+                // "http://feeds.soundcloud.com/stream/325004379-tehranpodcast-hermes09.mp3",
               })
             }
           >
