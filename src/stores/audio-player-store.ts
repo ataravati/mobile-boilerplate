@@ -50,6 +50,7 @@ const AudioPlayerStoreModel = types
         try {
           yield audioPlayer.play();
           self.paused = true;
+          self.currentTime = self.duration;
         } catch {}
       }
     }),
