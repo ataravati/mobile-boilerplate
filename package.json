@@ -29,7 +29,8 @@
     "react-native-mock-render": "^0.1.2",
     "react-native-sentry": "^0.39.1",
     "react-native-sound": "^0.10.9",
-    "react-navigation": "^2.18.0"
+    "react-navigation": "^2.18.0",
+    "rn-fetch-blob": "^0.10.15"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0-0",
