@@ -1,13 +1,12 @@
 import React from "react";
-import { Platform } from "react-native";
-import { Icon, View } from "native-base";
-import { Provider } from "mobx-react";
+import { Platform, TouchableOpacity } from "react-native";
+import { Icon, View, Container } from "native-base";
 import { createDrawerNavigator, createStackNavigator } from "react-navigation";
 
-import { todoStore } from "./stores/todo-store";
+// import { todoStore } from "./stores/todo-store";
 import { PointlessScreen } from "./screens/pointless-screen";
-import { TodoList } from "./screens/todo-list";
-import { TouchableOpacity } from "react-native";
+// import { TodoList } from "./screens/todo-list";
+import { Episodes } from "./screens/episodes";
 
 const withDrawerButton = navigation => {
   return {
@@ -32,11 +31,11 @@ const DrawerButton = props => {
 
 const DrawerNavigator = createDrawerNavigator(
   {
-    TodoList: {
+    Episodes: {
       screen: createStackNavigator(
         {
-          TodoList: {
-            screen: TodoList,
+          Episodes: {
+            screen: Episodes,
             navigationOptions: ({ navigation }) => ({
               ...withDrawerButton(navigation),
               drawerLabel: "صفحه‌ی بی‌خاصیت",
@@ -45,12 +44,12 @@ const DrawerNavigator = createDrawerNavigator(
           NestedPointlessScreen: { screen: PointlessScreen },
         },
         {
-          initialRouteName: "TodoList",
+          initialRouteName: "Episodes",
         },
       ),
       navigationOptions: ({ navigation }) => ({
         ...withDrawerButton(navigation),
-        drawerLabel: "لسیت کارهای عقب‌مانده",
+        drawerLabel: "پادکست‌های من",
       }),
     },
     PointlessScreen: {
@@ -74,7 +73,7 @@ const DrawerNavigator = createDrawerNavigator(
     },
   },
   {
-    initialRouteName: "TodoList",
+    initialRouteName: "Episodes",
     contentOptions: {
       activeTintColor: "#e91e63",
     },
@@ -105,9 +104,9 @@ export class App extends React.Component<Props> {
 
   render() {
     return (
-      <Provider todoStore={todoStore}>
+      <Container>
         <DrawerNavigator />
-      </Provider>
+      </Container>
     );
   }
 }
