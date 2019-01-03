@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Button, Text } from "native-base";
+import { View, Button, Icon } from "native-base";
 import { Slider } from "react-native";
 
 const Controls = ({ paused, volume, onPressPlay, onVolumeChange }) => {
@@ -19,7 +19,7 @@ const Controls = ({ paused, volume, onPressPlay, onVolumeChange }) => {
         onSlidingComplete={value => onVolumeChange(value)}
       />
       <Button onPress={() => onPressPlay()}>
-        <Text>{paused === true ? "Play" : "Pause"}</Text>
+        <Icon name={paused === true ? "play" : "pause"} />
       </Button>
     </View>
   );
