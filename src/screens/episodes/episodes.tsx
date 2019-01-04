@@ -1,34 +1,37 @@
 import React from "react";
-import { Container, Content, Header } from "native-base";
+import { inject, observer } from "mobx-react/native";
+import { Container, Content, Header, Spinner } from "native-base";
 import { ScrollView, StyleSheet } from "react-native";
-import { Episode } from "./episode";
+import { EpisodeItem } from "./episode-item";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
-import RNFetchBlob from "rn-fetch-blob";
-
-interface Episode {
-  title: string;
-  filename: string;
-}
+import { EpisodeStore, Episode } from "../../stores/episode-store";
 
 interface EpisodesProps {
   navigation: NavigationScreenProp<NavigationState>;
+  episodeStore: EpisodeStore;
 }
+
+interface EspisodesState {}
 
 const EpisodeList = ({
   onPlayEpisode,
   onDownloadEpisode,
   episodes,
 }: {
-  onPlayEpisode(episode: Episode): void;
-  onDownloadEpisode(episode: Episode): void;
-  episodes: Episode[];
+  onPlayEpisode(episode: typeof Episode.Type): void;
+  onDownloadEpisode(episode: typeof Episode.Type): void;
+  episodes: typeof Episode.Type[];
 }) => {
   return (
     <ScrollView style={styles.episodes}>
-      {episodes.map((episode: Episode, index: number) => (
-        <Episode
-          onPlayEpisode={(episode: Episode) => onPlayEpisode(episode)}
-          onDownloadEpisode={(episode: Episode) => onDownloadEpisode(episode)}
+      {episodes.map((episode: typeof Episode.Type, index: number) => (
+        <EpisodeItem
+          onPlayEpisode={(episode: typeof Episode.Type) =>
+            onPlayEpisode(episode)
+          }
+          onDownloadEpisode={(episode: typeof Episode.Type) =>
+            onDownloadEpisode(episode)
+          }
           key={index}
           episode={episode}
         />
@@ -37,45 +40,26 @@ const EpisodeList = ({
   );
 };
 
-export class Episodes extends React.Component<EpisodesProps, void> {
-  episodes: Episode[] = [
-    {
-      title: "فصل دوم - قسمت ۵ - کاش اینجا بودی",
-      filename:
-        "http://feeds.soundcloud.com/stream/247409391-tehranpodcast-lfuo5sqr9aby.mp3",
-    },
-    {
-      title: "مستند صوتی «بازیِ گوش» قسمت نهم: با پیمان یزدانیان",
-      filename: "325004379-tehranpodcast-hermes09.mp3",
-      // "http://feeds.soundcloud.com/stream/325004379-tehranpodcast-hermes09.mp3",
-    },
-  ];
-
+@inject("episodeStore")
+@observer
+export class Episodes extends React.Component<EpisodesProps, EspisodesState> {
   static navigationOptions = {
     title: "پادکست‌های من",
   };
 
-  playEpisode = (episode: Episode) => {
+  constructor(props: EpisodesProps) {
+    super(props);
+    this.props.episodeStore.fetchAll();
+  }
+
+  playEpisode = (episode: typeof Episode.Type) => {
     this.props.navigation.push("NestedPointlessScreen", {
-      filename: episode.filename,
+      episode: episode,
     });
   };
 
-  downloadEpisode = (episode: Episode) => {
-    console.log(`Downloading episode ${episode.title}`);
-    const dirs = RNFetchBlob.fs.dirs;
-    const filename = episode.filename.split("/").pop();
-    RNFetchBlob.config({
-      fileCache: true,
-      path: dirs.MainBundleDir + "/" + filename,
-    })
-      .fetch("GET", episode.filename)
-      .progress((received: number, total: number) => {
-        console.log(`${received} of ${total} downloaded...`);
-      })
-      .then(res => {
-        console.log(`The file saved to ${res.path()}`);
-      });
+  downloadEpisode = (episode: typeof Episode.Type) => {
+    this.props.episodeStore.downloadEpisode(episode);
   };
 
   render() {
@@ -83,11 +67,15 @@ export class Episodes extends React.Component<EpisodesProps, void> {
       <Container style={{ direction: "rtl" }}>
         <Header style={{ backgroundColor: "white" }} />
         <Content style={{ flex: 1 }}>
-          <EpisodeList
-            onPlayEpisode={episode => this.playEpisode(episode)}
-            onDownloadEpisode={episode => this.downloadEpisode(episode)}
-            episodes={this.episodes}
-          />
+          {this.props.episodeStore.isLoading ? (
+            <Spinner />
+          ) : (
+            <EpisodeList
+              onPlayEpisode={episode => this.playEpisode(episode)}
+              onDownloadEpisode={episode => this.downloadEpisode(episode)}
+              episodes={this.props.episodeStore.episodes}
+            />
+          )}
         </Content>
       </Container>
     );

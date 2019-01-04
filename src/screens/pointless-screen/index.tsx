@@ -3,6 +3,7 @@ import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { View } from "native-base";
 import AudioPlayer from "./audio-player";
 import { audioPlayerStore } from "../../stores/audio-player-store";
+import { Episode } from "../../stores/episode-store";
 
 interface PointlessScreenProps {
   navigation: NavigationScreenProp<NavigationState>;
@@ -16,14 +17,18 @@ export class PointlessScreen extends React.Component<
     title: "صفحه‌ی بی‌خاصیت",
   };
 
-  filename = this.props.navigation.getParam("filename");
+  episode: typeof Episode.Type = this.props.navigation.getParam("episode");
 
   render() {
     return (
       <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
         <AudioPlayer
           audioPlayerStore={audioPlayerStore}
-          filename={this.filename}
+          path={
+            this.episode.isLocal === true
+              ? this.episode.filename
+              : this.episode.url
+          }
         />
       </View>
     );

@@ -1,12 +1,12 @@
 import React from "react";
+import { Provider } from "mobx-react";
 import { Platform, TouchableOpacity } from "react-native";
-import { Icon, View, Container } from "native-base";
+import { Icon, View } from "native-base";
 import { createDrawerNavigator, createStackNavigator } from "react-navigation";
 
-// import { todoStore } from "./stores/todo-store";
 import { PointlessScreen } from "./screens/pointless-screen";
-// import { TodoList } from "./screens/todo-list";
 import { Episodes } from "./screens/episodes";
+import { episodeStore } from "./stores/episode-store";
 
 const withDrawerButton = navigation => {
   return {
@@ -104,9 +104,9 @@ export class App extends React.Component<Props> {
 
   render() {
     return (
-      <Container>
+      <Provider episodeStore={episodeStore}>
         <DrawerNavigator />
-      </Container>
+      </Provider>
     );
   }
 }

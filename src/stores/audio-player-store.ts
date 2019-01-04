@@ -9,39 +9,37 @@ const AudioPlayerStoreModel = types
   .model("AudioPlayerStore", {
     isLoading: types.boolean,
     paused: types.boolean,
-    filename: types.string,
+    path: types.string,
     duration: types.number,
     currentTime: types.number,
     volume: types.number,
   })
   .actions(self => ({
-    load: flow(function*(filename: string) {
+    load: flow(function*(path: string) {
       self.isLoading = true;
       // If the track has changed...
-      if (self.filename && filename !== self.filename) {
+      if (self.path && path !== self.path) {
         self.currentTime = (yield audioPlayer.getCurrentTime()).seconds;
-        snapshots[self.filename] = getSnapshot(self);
+        snapshots[self.path] = getSnapshot(self);
         audioPlayer.release();
 
-        self.currentTime = snapshots[filename]
-          ? snapshots[filename].currentTime
-          : 0;
-        self.volume = snapshots[filename] ? snapshots[filename].volume : 1;
+        self.currentTime = snapshots[path] ? snapshots[path].currentTime : 0;
+        self.volume = snapshots[path] ? snapshots[path].volume : 1;
 
         self.paused = true;
       }
 
       try {
         // If it's a new track...
-        if (!self.filename || self.filename !== filename)
-          yield audioPlayer.load(filename, self.currentTime, self.volume);
+        if (!self.path || self.path !== path)
+          yield audioPlayer.load(path, self.currentTime, self.volume);
 
-        self.isLoading = false;
-        self.filename = filename;
+        self.path = path;
         self.duration = audioPlayer.getDuration();
       } catch (error) {
         console.log("Failed to load the audio file.", error);
       }
+      self.isLoading = false;
     }),
     play: flow(function*() {
       if (audioPlayer.isLoaded()) {
@@ -82,7 +80,7 @@ const AudioPlayerStoreModel = types
 export const audioPlayerStore = AudioPlayerStoreModel.create({
   isLoading: true,
   paused: true,
-  filename: "",
+  path: "",
   duration: -1,
   currentTime: 0,
   volume: 1,

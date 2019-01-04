@@ -6,7 +6,7 @@ import Controls from "./controls";
 import { AudioPlayerStore } from "../../stores/audio-player-store";
 
 export interface AudioPlayerProps {
-  filename: string;
+  path: string;
   audioPlayerStore: AudioPlayerStore;
 }
 
@@ -20,7 +20,7 @@ export default class AudioPlayer extends React.Component<
 > {
   constructor(props: AudioPlayerProps) {
     super(props);
-    this.props.audioPlayerStore.load(this.props.filename);
+    this.props.audioPlayerStore.load(this.props.path);
   }
 
   trackInterval = setInterval(() => {

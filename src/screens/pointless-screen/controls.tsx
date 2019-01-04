@@ -2,7 +2,17 @@ import React from "react";
 import { View, Button, Icon } from "native-base";
 import { Slider } from "react-native";
 
-const Controls = ({ paused, volume, onPressPlay, onVolumeChange }) => {
+const Controls = ({
+  paused,
+  volume,
+  onPressPlay,
+  onVolumeChange,
+}: {
+  paused: boolean;
+  volume: number;
+  onPressPlay(): void;
+  onVolumeChange(value: number): void;
+}) => {
   return (
     <View
       style={{
@@ -16,7 +26,7 @@ const Controls = ({ paused, volume, onPressPlay, onVolumeChange }) => {
         minimumValue={0}
         maximumValue={1}
         value={volume}
-        onSlidingComplete={value => onVolumeChange(value)}
+        onSlidingComplete={(value: number) => onVolumeChange(value)}
       />
       <Button onPress={() => onPressPlay()}>
         <Icon name={paused === true ? "play" : "pause"} />

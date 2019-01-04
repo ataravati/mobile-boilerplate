@@ -22,7 +22,19 @@ const padZero = (number: number) => {
   return number;
 };
 
-const SeekBar = ({ duration, currentTime, onSeek, onSeekStart, onSeekEnd }) => {
+const SeekBar = ({
+  duration,
+  currentTime,
+  onSeek,
+  onSeekStart,
+  onSeekEnd,
+}: {
+  duration: number;
+  currentTime: number;
+  onSeek(value: number): void;
+  onSeekStart(): void;
+  onSeekEnd(): void;
+}) => {
   const elapsed = formatTime(currentTime);
   const remaining = formatTime(currentTime - duration);
 
@@ -38,7 +50,7 @@ const SeekBar = ({ duration, currentTime, onSeek, onSeekStart, onSeekEnd }) => {
         value={currentTime}
         onResponderMove={() => onSeekStart()}
         onResponderRelease={() => onSeekEnd()}
-        onSlidingComplete={value => onSeek(value)}
+        onSlidingComplete={(value: number) => onSeek(value)}
       />
     </View>
   );
