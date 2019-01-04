@@ -1,3 +1,4 @@
+import { Platform } from "react-native";
 import { flow, types, onSnapshot } from "mobx-state-tree";
 import RNFetchBlob from "rn-fetch-blob";
 
@@ -23,7 +24,7 @@ export const Episode = types
   .model("Episode", {
     title: types.string,
     url: types.string,
-    filename: types.optional(types.string, ""),
+    localPath: types.optional(types.string, ""),
     isLocal: types.optional(types.boolean, false),
     isDownloading: types.optional(types.boolean, false),
   })
@@ -39,7 +40,7 @@ export const Episode = types
         }).fetch("GET", self.url);
         console.log(`The file saved to ${res.path()}.`);
         self.isLocal = true;
-        self.filename = filename;
+        self.localPath = Platform.OS === "android" ? res.path() : filename;
       } catch (error) {
         console.log(`Could not download ${self.url}.`, error);
       }
