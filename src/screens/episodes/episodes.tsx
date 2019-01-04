@@ -2,7 +2,7 @@ import React from "react";
 import { inject, observer } from "mobx-react/native";
 import { Container, Content, Header, Spinner } from "native-base";
 import { ScrollView, StyleSheet } from "react-native";
-import { EpisodeItem } from "./episode-item";
+import EpisodeItem from "./episode-item";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { EpisodeStore, Episode } from "../../stores/episode-store";
 
