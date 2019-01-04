@@ -350,7 +350,7 @@ exports[`todo-list can render snapshot 1`] = `
                 },
                 Object {
                   "flexDirection": "column",
-                  "height": 100,
+                  "height": 150,
                 },
               ]
             }
@@ -458,7 +458,60 @@ exports[`todo-list can render snapshot 1`] = `
                 }
                 uppercase={false}
               >
-                برو به صفحه‌ی بی‌خاصیت
+                فصل دوم - قسمت ۵ - کاش اینجا بودی
+              </Text>
+            </View>
+            <View
+              accessible={true}
+              isTVSelectable={true}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                Object {
+                  "alignItems": "center",
+                  "alignSelf": "stretch",
+                  "backgroundColor": "#007aff",
+                  "borderBottomWidth": null,
+                  "borderColor": "#007aff",
+                  "borderLeftWidth": null,
+                  "borderRadius": 0,
+                  "borderRightWidth": null,
+                  "borderTopWidth": null,
+                  "borderWidth": undefined,
+                  "elevation": 2,
+                  "flexDirection": "row",
+                  "height": 45,
+                  "justifyContent": "center",
+                  "opacity": 1,
+                  "paddingBottom": 6,
+                  "paddingTop": 6,
+                  "shadowColor": undefined,
+                  "shadowOffset": undefined,
+                  "shadowOpacity": undefined,
+                  "shadowRadius": undefined,
+                }
+              }
+            >
+              <Text
+                style={
+                  Object {
+                    "backgroundColor": "transparent",
+                    "color": "#fff",
+                    "fontFamily": "System",
+                    "fontSize": 16.5,
+                    "marginLeft": 0,
+                    "marginRight": 0,
+                    "paddingLeft": 16,
+                    "paddingRight": 16,
+                  }
+                }
+                uppercase={false}
+              >
+                مستند صوتی «بازیِ گوش» قسمت نهم
               </Text>
             </View>
           </View>
