@@ -12,7 +12,6 @@ export function EpisodeItem({
   onDownloadEpisode(episode: typeof Episode.Type): void;
   episode: typeof Episode.Type;
 }) {
-  console.log(episode);
   return (
     <View style={styles.episode} testID="episode-item">
       <Text testID="episode-title" style={styles.title}>

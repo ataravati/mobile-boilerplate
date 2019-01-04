@@ -3,7 +3,6 @@ import { View, Text } from "native-base";
 import { Slider } from "react-native";
 
 const formatTime = (time: number) => {
-  time = Math.floor(time);
   let result = time < 0 ? "-" : "";
   time = Math.abs(time);
   const hours = Math.floor(time / 3600);
@@ -35,8 +34,8 @@ const SeekBar = ({
   onSeekStart(): void;
   onSeekEnd(): void;
 }) => {
-  const elapsed = formatTime(currentTime);
-  const remaining = formatTime(currentTime - duration);
+  const elapsed = formatTime(Math.floor(currentTime));
+  const remaining = formatTime(Math.floor(currentTime) - Math.floor(duration));
 
   return (
     <View>
