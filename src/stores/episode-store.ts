@@ -56,7 +56,9 @@ const EpisodeStoreModel = types
   .actions(self => ({
     fetchAll: flow(function*() {
       self.isLoading = true;
-      self.episodes = yield getEpisodes();
+      try {
+        self.episodes = yield getEpisodes();
+      } catch {}
       self.isLoading = false;
     }),
     downloadEpisode: flow(function*(episode: typeof Episode.Type) {
