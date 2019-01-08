@@ -4,8 +4,13 @@ jest.mock("react-native-sound");
 
 describe("audio-player", () => {
   const audioPlayer = new AudioPlayer();
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
   it("can load audio file", () => {
-    expect.assertions(3);
+    expect.assertions(4);
     const path = "sample_audio.mp3";
     let isLoaded = audioPlayer.isLoaded();
     expect(isLoaded).toEqual(false);
@@ -13,6 +18,7 @@ describe("audio-player", () => {
       expect(audioPlayer.path).toEqual(path);
       isLoaded = audioPlayer.isLoaded();
       expect(isLoaded).toEqual(true);
+      expect(audioPlayer.getDuration()).toEqual(500);
     });
   });
 
@@ -25,6 +31,32 @@ describe("audio-player", () => {
         seconds: time,
         isPlaying: false,
       });
+    });
+  });
+
+  it("can load audio file with a given volumne", () => {
+    expect.assertions(1);
+    const path = "sample_audio.mp3";
+    const volume = 0.5;
+    return audioPlayer.load(path, 0, volume).then(() => {
+      expect(audioPlayer.getVolume()).toEqual(volume);
+    });
+  });
+
+  it("can change the volume", () => {
+    let volume = 0.8;
+    audioPlayer.setVolume(0.8);
+    expect(audioPlayer.getVolume()).toEqual(volume);
+    audioPlayer.setVolume(volume - 0.3);
+    expect(audioPlayer.getVolume()).toEqual(volume - 0.3);
+  });
+
+  it("can change current time", () => {
+    let time = 250;
+    audioPlayer.setCurrentTime(time);
+    return expect(audioPlayer.getCurrentTime()).resolves.toEqual({
+      seconds: time,
+      isPlaying: false,
     });
   });
 });

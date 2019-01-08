@@ -12,7 +12,7 @@ const Sound = (filename, basePath, callback) => {
 
   setTimeout(() => {
     _loaded = true;
-    _duration = 10;
+    _duration = 500;
 
     callback();
   }, 2000);
