@@ -9,14 +9,14 @@ if (Platform.OS === "ios") {
 const sounds = {};
 
 export default class AudioPlayer {
-  private path = "";
+  path = "";
 
   load = (path: string, time: number = 0, volume: number = 1) => {
     const that = this;
     return new Promise((resolve, reject) => {
       const basePath =
         path.startsWith("http") === true ? "" : Sound.MAIN_BUNDLE;
-      const sound = new Sound(path, basePath, function(error) {
+      const sound = new Sound(path, basePath, error => {
         if (error) {
           reject(error);
         } else {
@@ -31,7 +31,7 @@ export default class AudioPlayer {
   };
 
   isLoaded = () => {
-    return this.path && sounds[this.path].isLoaded();
+    return this.path ? sounds[this.path].isLoaded() : false;
   };
 
   play = () => {
