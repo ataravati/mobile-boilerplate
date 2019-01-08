@@ -10,7 +10,6 @@ describe("audio-player", () => {
   });
 
   it("can load audio file", () => {
-    expect.assertions(4);
     const path = "sample_audio.mp3";
     let isLoaded = audioPlayer.isLoaded();
     expect(isLoaded).toEqual(false);
@@ -23,7 +22,6 @@ describe("audio-player", () => {
   });
 
   it("can load audio file at a given position in time", () => {
-    expect.assertions(1);
     const path = "sample_audio.mp3";
     const time = 4;
     return audioPlayer.load(path, time).then(() => {
@@ -35,7 +33,6 @@ describe("audio-player", () => {
   });
 
   it("can load audio file with a given volumne", () => {
-    expect.assertions(1);
     const path = "sample_audio.mp3";
     const volume = 0.5;
     return audioPlayer.load(path, 0, volume).then(() => {
