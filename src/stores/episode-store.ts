@@ -8,7 +8,7 @@ export const Episode = types
     id: types.number,
     title: types.string,
     url: types.string,
-    localPath: types.optional(types.string, ""),
+    localPath: types.maybe(types.string),
     isLocal: types.optional(types.boolean, false),
     isDownloading: types.optional(types.boolean, false),
   })
@@ -47,6 +47,8 @@ const EpisodeStoreModel = types
             id: episode.id,
             title: episode.title,
             url: episode.url,
+            localPath: episode.localPath,
+            isLocal: episode.isLocal,
           };
         });
         self.episodes = episodes;
