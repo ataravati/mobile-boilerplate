@@ -1,7 +1,7 @@
 import { Platform } from "react-native";
 import { flow, types, onSnapshot } from "mobx-state-tree";
 import RNFetchBlob from "rn-fetch-blob";
-import { getPodcasts } from "../database/allSchemas";
+import { getPodcasts, updateEpisode } from "../database/allSchemas";
 
 export const Episode = types
   .model("Episode", {
@@ -25,6 +25,8 @@ export const Episode = types
         console.log(`The file saved to ${res.path()}.`);
         self.isLocal = true;
         self.localPath = Platform.OS === "android" ? res.path() : filename;
+
+        yield updateEpisode(self);
       } catch (error) {
         console.log(`Could not download ${self.url}.`, error);
       }

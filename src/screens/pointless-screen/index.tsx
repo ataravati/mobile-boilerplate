@@ -25,7 +25,7 @@ export class PointlessScreen extends React.Component<
         <AudioPlayer
           audioPlayerStore={audioPlayerStore}
           path={
-            this.episode.isLocal === true
+            this.episode.isLocal === true && this.episode.localPath
               ? this.episode.localPath
               : this.episode.url
           }

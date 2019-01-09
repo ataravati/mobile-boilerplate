@@ -58,3 +58,26 @@ export const getPodcasts = () =>
         reject(error);
       });
   });
+
+export const updateEpisode = episode =>
+  new Promise((resolve, reject) => {
+    Realm.open(databaseOptions)
+      .then(realm => {
+        realm.write(() => {
+          let episodeToUpdate = realm.objectForPrimaryKey(
+            EPISODE_SCHEMA,
+            episode.id,
+          ) as typeof EpisodeSchema.properties;
+
+          if (episodeToUpdate) {
+            episodeToUpdate.localPath = episode.localPath;
+            episodeToUpdate.isLocal = episode.isLocal;
+          }
+
+          resolve(episodeToUpdate);
+        });
+      })
+      .catch(error => {
+        reject(error);
+      });
+  });
