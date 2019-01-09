@@ -30,6 +30,7 @@
     "react-native-sentry": "^0.39.1",
     "react-native-sound": "^0.10.9",
     "react-navigation": "^2.18.0",
+    "realm": "^2.21.1",
     "rn-fetch-blob": "^0.10.15"
   },
   "devDependencies": {
