@@ -1,0 +1,22 @@
+{
+  "podcasts": [
+    {
+      "id": 1,
+      "title": "رادیو روغن حبه‌ی انگور",
+      "episodes": [
+        {
+          "id": 1,
+          "title": "فصل دوم - قسمت ۵ - کاش اینجا بودی",
+          "url":
+            "http://feeds.soundcloud.com/stream/247409391-tehranpodcast-lfuo5sqr9aby.mp3"
+        },
+        {
+          "id": 2,
+          "title": "مستند صوتی «بازیِ گوش» قسمت نهم: با پیمان یزدانیان",
+          "url":
+            "http://feeds.soundcloud.com/stream/325004379-tehranpodcast-hermes09.mp3"
+        }
+      ]
+    }
+  ]
+}

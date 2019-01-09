@@ -1,6 +1,4 @@
 import { audioPlayerStore } from "./audio-player-store";
-import { exact } from "prop-types";
-import { doesNotReject } from "assert";
 
 jest.mock("react-native-sound");
 describe("audio-player-store", () => {

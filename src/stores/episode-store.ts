@@ -1,27 +1,11 @@
 import { Platform } from "react-native";
 import { flow, types, onSnapshot } from "mobx-state-tree";
 import RNFetchBlob from "rn-fetch-blob";
-
-const getEpisodes = () => {
-  return new Promise(resolve => {
-    const episodes = [
-      {
-        title: "فصل دوم - قسمت ۵ - کاش اینجا بودی",
-        url:
-          "http://feeds.soundcloud.com/stream/247409391-tehranpodcast-lfuo5sqr9aby.mp3",
-      },
-      {
-        title: "مستند صوتی «بازیِ گوش» قسمت نهم: با پیمان یزدانیان",
-        url:
-          "http://feeds.soundcloud.com/stream/325004379-tehranpodcast-hermes09.mp3",
-      },
-    ];
-    resolve(episodes);
-  });
-};
+import { getPodcasts } from "../database/allSchemas";
 
 export const Episode = types
   .model("Episode", {
+    id: types.number,
     title: types.string,
     url: types.string,
     localPath: types.optional(types.string, ""),
@@ -57,7 +41,15 @@ const EpisodeStoreModel = types
     fetchAll: flow(function*() {
       self.isLoading = true;
       try {
-        self.episodes = yield getEpisodes();
+        const podcasts = yield getPodcasts();
+        const episodes = podcasts[0].episodes.map(episode => {
+          return {
+            id: episode.id,
+            title: episode.title,
+            url: episode.url,
+          };
+        });
+        self.episodes = episodes;
       } catch {}
       self.isLoading = false;
     }),
