@@ -12,6 +12,13 @@ export const Episode = types
     isLocal: types.optional(types.boolean, false),
     isDownloading: types.optional(types.boolean, false),
   })
+  .views(self => ({
+    get path() {
+      return self.isLocal === true && self.localPath
+        ? self.localPath
+        : self.url;
+    },
+  }))
   .actions(self => ({
     download: flow(function*() {
       self.isDownloading = true;
