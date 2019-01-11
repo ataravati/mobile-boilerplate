@@ -28,7 +28,7 @@ const EpisodeItem = observer(
         <View style={{ flexDirection: "row" }}>
           {episode.localPath ? (
             <Button transparent onPress={() => onDeleteEpisode(episode)}>
-              <Icon name="trash" />
+              <Icon name={Platform.OS === "ios" ? "ios-trash" : "trash"} />
             </Button>
           ) : (
             <Button
