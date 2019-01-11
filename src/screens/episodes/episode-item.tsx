@@ -1,7 +1,7 @@
 import React from "react";
 import { observer } from "mobx-react/native";
 import { Button, Text, View, Icon, Spinner } from "native-base";
-import { StyleSheet } from "react-native";
+import { StyleSheet, Platform } from "react-native";
 import { Episode } from "../../stores/episode-store";
 
 const EpisodeItem = observer(
@@ -36,11 +36,13 @@ const EpisodeItem = observer(
               disabled={episode.isDownloading}
               onPress={() => onDownloadEpisode(episode)}
             >
-              <Icon name="download" />
+              <Icon
+                name={Platform.OS === "ios" ? "ios-cloud-download" : "download"}
+              />
             </Button>
           )}
           <Button transparent onPress={() => onSelectEpisode(episode)}>
-            <Icon name="play" />
+            <Icon name={Platform.OS === "ios" ? "ios-play" : "play"} />
           </Button>
         </View>
       </View>

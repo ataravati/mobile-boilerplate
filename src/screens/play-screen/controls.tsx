@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Button, Icon } from "native-base";
-import { Slider } from "react-native";
+import { Slider, Platform } from "react-native";
 
 const Controls = ({
   paused,
@@ -13,6 +13,8 @@ const Controls = ({
   onPressPlay(): void;
   onVolumeChange(value: number): void;
 }) => {
+  const playIcon = Platform.OS === "ios" ? "ios-play" : "play";
+  const pauseIcon = Platform.OS === "ios" ? "ios-pause" : "pause";
   return (
     <View
       style={{
@@ -29,7 +31,7 @@ const Controls = ({
         onSlidingComplete={(value: number) => onVolumeChange(value)}
       />
       <Button onPress={() => onPressPlay()}>
-        <Icon name={paused === true ? "play" : "pause"} />
+        <Icon name={paused === true ? playIcon : pauseIcon} />
       </Button>
     </View>
   );
