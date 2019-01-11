@@ -14,23 +14,28 @@ interface EpisodesProps {
 interface EspisodesState {}
 
 const EpisodeList = ({
-  onPlayEpisode,
+  onSelectEpisode,
   onDownloadEpisode,
+  onDeleteEpisode,
   episodes,
 }: {
-  onPlayEpisode(episode: typeof Episode.Type): void;
+  onSelectEpisode(episode: typeof Episode.Type): void;
   onDownloadEpisode(episode: typeof Episode.Type): void;
+  onDeleteEpisode(episode: typeof Episode.Type): void;
   episodes: typeof Episode.Type[];
 }) => {
   return (
     <ScrollView style={styles.episodes}>
       {episodes.map((episode: typeof Episode.Type, index: number) => (
         <EpisodeItem
-          onPlayEpisode={(episode: typeof Episode.Type) =>
-            onPlayEpisode(episode)
+          onSelectEpisode={(episode: typeof Episode.Type) =>
+            onSelectEpisode(episode)
           }
           onDownloadEpisode={(episode: typeof Episode.Type) =>
             onDownloadEpisode(episode)
+          }
+          onDeleteEpisode={(episode: typeof Episode.Type) =>
+            onDeleteEpisode(episode)
           }
           key={index}
           episode={episode}
@@ -52,7 +57,7 @@ export class Episodes extends React.Component<EpisodesProps, EspisodesState> {
     this.props.episodeStore.fetchAll();
   }
 
-  playEpisode = (episode: typeof Episode.Type) => {
+  goToEpisode = (episode: typeof Episode.Type) => {
     this.props.navigation.push("NestedPointlessScreen", {
       episode: episode,
     });
@@ -60,6 +65,10 @@ export class Episodes extends React.Component<EpisodesProps, EspisodesState> {
 
   downloadEpisode = (episode: typeof Episode.Type) => {
     this.props.episodeStore.downloadEpisode(episode);
+  };
+
+  deleteEpisode = (episode: typeof Episode.Type) => {
+    this.props.episodeStore.deleteEpisode(episode);
   };
 
   render() {
@@ -71,8 +80,9 @@ export class Episodes extends React.Component<EpisodesProps, EspisodesState> {
             <Spinner />
           ) : (
             <EpisodeList
-              onPlayEpisode={episode => this.playEpisode(episode)}
+              onSelectEpisode={episode => this.goToEpisode(episode)}
               onDownloadEpisode={episode => this.downloadEpisode(episode)}
+              onDeleteEpisode={episode => this.deleteEpisode(episode)}
               episodes={this.props.episodeStore.episodes}
             />
           )}

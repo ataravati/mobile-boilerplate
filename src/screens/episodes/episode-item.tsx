@@ -6,21 +6,31 @@ import { Episode } from "../../stores/episode-store";
 
 const EpisodeItem = observer(
   ({
-    onPlayEpisode,
+    onSelectEpisode,
     onDownloadEpisode,
+    onDeleteEpisode,
     episode,
   }: {
-    onPlayEpisode(episode: typeof Episode.Type): void;
+    onSelectEpisode(episode: typeof Episode.Type): void;
     onDownloadEpisode(episode: typeof Episode.Type): void;
+    onDeleteEpisode(episode: typeof Episode.Type): void;
     episode: typeof Episode.Type;
   }) => {
     return (
       <View style={styles.episode} testID="episode-item">
-        <Text testID="episode-title" style={styles.title}>
+        <Text
+          testID="episode-title"
+          style={styles.title}
+          onPress={() => onSelectEpisode(episode)}
+        >
           {episode.title}
         </Text>
         <View style={{ flexDirection: "row" }}>
-          {episode.isLocal === false && (
+          {episode.localPath ? (
+            <Button transparent onPress={() => onDeleteEpisode(episode)}>
+              <Icon name="trash" />
+            </Button>
+          ) : (
             <Button
               transparent
               disabled={episode.isDownloading}
@@ -29,7 +39,7 @@ const EpisodeItem = observer(
               <Icon name="download" />
             </Button>
           )}
-          <Button transparent onPress={() => onPlayEpisode(episode)}>
+          <Button transparent onPress={() => onSelectEpisode(episode)}>
             <Icon name="play" />
           </Button>
         </View>
@@ -47,7 +57,8 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     justifyContent: "space-between",
-    margin: 10,
+    padding: 10,
+    backgroundColor: "#eee",
   },
 });
 

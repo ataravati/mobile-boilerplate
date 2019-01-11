@@ -82,6 +82,9 @@ const EpisodeStoreModel = types
     downloadEpisode: flow(function*(episode: typeof Episode.Type) {
       episode.download();
     }),
+    deleteEpisode: flow(function*(episode: typeof Episode.Type) {
+      episode.delete();
+    }),
   }));
 
 export const episodeStore = EpisodeStoreModel.create({
