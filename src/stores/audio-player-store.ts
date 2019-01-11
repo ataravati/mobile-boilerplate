@@ -17,7 +17,6 @@ const AudioPlayerStoreModel = types
   })
   .actions(self => ({
     load: flow(function*(episode: typeof Episode.Type) {
-      console.log("Episode to load: ", episode);
       self.isLoading = true;
       // If the track has changed...
       if (self.episode && episode.path !== self.episode.path) {
@@ -55,6 +54,8 @@ const AudioPlayerStoreModel = types
           yield audioPlayer.play();
           self.paused = true;
           self.currentTime = self.duration;
+
+          (self.episode as typeof Episode.Type).delete();
         } catch {}
       }
     }),

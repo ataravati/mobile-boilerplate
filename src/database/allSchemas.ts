@@ -66,7 +66,7 @@ export const updateEpisode = episode =>
         realm.write(() => {
           let episodeToUpdate = realm.objectForPrimaryKey(
             EPISODE_SCHEMA,
-            episode.id,
+            parseInt(episode.id),
           ) as typeof EpisodeSchema.properties;
 
           if (episodeToUpdate) {

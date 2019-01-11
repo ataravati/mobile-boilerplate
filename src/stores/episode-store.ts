@@ -39,6 +39,19 @@ export const Episode = types
       }
       self.isDownloading = false;
     }),
+    delete: flow(function*() {
+      if (self.localPath) {
+        try {
+          yield RNFetchBlob.fs.unlink(self.localPath);
+          self.isLocal = false;
+          self.localPath = null;
+
+          yield updateEpisode(self);
+        } catch (error) {
+          console.log(`Could not delete ${self.localPath}.`, error);
+        }
+      }
+    }),
   }));
 
 const EpisodeStoreModel = types

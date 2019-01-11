@@ -21,7 +21,6 @@ export default class AudioPlayer extends React.Component<
 > {
   constructor(props: AudioPlayerProps) {
     super(props);
-    console.log("Episode prop: ", this.props.episode);
     this.props.audioPlayerStore.load(this.props.episode);
   }
 
