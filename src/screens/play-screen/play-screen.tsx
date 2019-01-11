@@ -14,7 +14,7 @@ export class PointlessScreen extends React.Component<
   void
 > {
   static navigationOptions = {
-    title: "صفحه‌ی بی‌خاصیت",
+    title: "در حال پخش",
   };
 
   episode: typeof Episode.Type = this.props.navigation.getParam("episode");
@@ -24,7 +24,7 @@ export class PointlessScreen extends React.Component<
       <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
         <AudioPlayer
           audioPlayerStore={audioPlayerStore}
-          path={this.episode.path}
+          episode={this.episode}
         />
       </View>
     );

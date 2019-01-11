@@ -4,7 +4,7 @@ import { Platform, TouchableOpacity } from "react-native";
 import { Icon, View } from "native-base";
 import { createDrawerNavigator, createStackNavigator } from "react-navigation";
 
-import { PointlessScreen } from "./screens/pointless-screen";
+import { PointlessScreen } from "./screens/play-screen";
 import { Episodes } from "./screens/episodes";
 import { episodeStore } from "./stores/episode-store";
 
@@ -38,7 +38,7 @@ const DrawerNavigator = createDrawerNavigator(
             screen: Episodes,
             navigationOptions: ({ navigation }) => ({
               ...withDrawerButton(navigation),
-              drawerLabel: "صفحه‌ی بی‌خاصیت",
+              drawerLabel: "در حال پخش",
             }),
           },
           NestedPointlessScreen: { screen: PointlessScreen },
@@ -68,7 +68,7 @@ const DrawerNavigator = createDrawerNavigator(
       ),
       navigationOptions: ({ navigation }) => ({
         ...withDrawerButton(navigation),
-        drawerLabel: "صفحه‌ی بی‌خاصیت",
+        drawerLabel: "در حال پخش",
       }),
     },
   },

@@ -5,7 +5,7 @@ import { getPodcasts, updateEpisode } from "../database/allSchemas";
 
 export const Episode = types
   .model("Episode", {
-    id: types.number,
+    id: types.identifier(),
     title: types.string,
     url: types.string,
     localPath: types.maybe(types.string),
@@ -51,14 +51,16 @@ const EpisodeStoreModel = types
       self.isLoading = true;
       try {
         const podcasts = yield getPodcasts();
-        const episodes = podcasts[0].episodes.map(episode => {
-          return {
-            id: episode.id,
-            title: episode.title,
-            url: episode.url,
-            localPath: episode.localPath,
-            isLocal: episode.isLocal,
-          };
+        const episodes = podcasts[0].episodes.map(e => {
+          let episode = Episode.create({
+            id: e.id.toString(),
+            title: e.title,
+            url: e.url,
+            localPath: e.localPath,
+            isLocal: e.isLocal,
+          });
+
+          return episode;
         });
         self.episodes = episodes;
       } catch {}

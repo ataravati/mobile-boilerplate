@@ -4,9 +4,10 @@ import { View, Spinner } from "native-base";
 import SeekBar from "./seek-bar";
 import Controls from "./controls";
 import { AudioPlayerStore } from "../../stores/audio-player-store";
+import { Episode } from "../../stores/episode-store";
 
 export interface AudioPlayerProps {
-  path: string;
+  episode: typeof Episode.Type;
   audioPlayerStore: AudioPlayerStore;
 }
 
@@ -20,7 +21,8 @@ export default class AudioPlayer extends React.Component<
 > {
   constructor(props: AudioPlayerProps) {
     super(props);
-    this.props.audioPlayerStore.load(this.props.path);
+    console.log("Episode prop: ", this.props.episode);
+    this.props.audioPlayerStore.load(this.props.episode);
   }
 
   trackInterval = setInterval(() => {
