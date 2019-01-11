@@ -9,14 +9,11 @@ export const Episode = types
     title: types.string,
     url: types.string,
     localPath: types.maybe(types.string),
-    isLocal: types.optional(types.boolean, false),
     isDownloading: types.optional(types.boolean, false),
   })
   .views(self => ({
     get path() {
-      return self.isLocal === true && self.localPath
-        ? self.localPath
-        : self.url;
+      return self.localPath ? self.localPath : self.url;
     },
   }))
   .actions(self => ({
@@ -30,7 +27,6 @@ export const Episode = types
           path: dirs.MainBundleDir + "/" + filename,
         }).fetch("GET", self.url);
         console.log(`The file saved to ${res.path()}.`);
-        self.isLocal = true;
         self.localPath = Platform.OS === "android" ? res.path() : filename;
 
         yield updateEpisode(self);
@@ -43,7 +39,6 @@ export const Episode = types
       if (self.localPath) {
         try {
           yield RNFetchBlob.fs.unlink(self.localPath);
-          self.isLocal = false;
           self.localPath = null;
 
           yield updateEpisode(self);
@@ -70,7 +65,6 @@ const EpisodeStoreModel = types
             title: e.title,
             url: e.url,
             localPath: e.localPath,
-            isLocal: e.isLocal,
           });
 
           return episode;

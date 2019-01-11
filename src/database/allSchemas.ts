@@ -22,7 +22,6 @@ export const EpisodeSchema = {
     title: "string",
     url: "string",
     localPath: { type: "string", optional: true },
-    isLocal: { type: "bool", default: false },
   },
 };
 
@@ -71,7 +70,6 @@ export const updateEpisode = episode =>
 
           if (episodeToUpdate) {
             episodeToUpdate.localPath = episode.localPath;
-            episodeToUpdate.isLocal = episode.isLocal;
           }
 
           resolve(episodeToUpdate);

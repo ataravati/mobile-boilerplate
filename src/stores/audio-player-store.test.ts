@@ -11,7 +11,6 @@ describe("audio-player-store", () => {
       title: "test",
       url: "https://sample-videos.com/audio/mp3/wave.mp3",
       localPath: "sample_audio.mp3",
-      isLocal: true,
       isDownloading: false,
     });
 
@@ -30,7 +29,6 @@ describe("audio-player-store", () => {
       title: "test",
       url: "https://sample-videos.com/audio/mp3/wave.mp3",
       localPath: null,
-      isLocal: false,
       isDownloading: false,
     });
 
