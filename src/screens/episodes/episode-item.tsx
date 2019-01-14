@@ -1,28 +1,26 @@
 import React from "react";
 import { observer } from "mobx-react/native";
-import { Button, Text, View, Icon, Spinner } from "native-base";
+import { Button, Text, View, Icon } from "native-base";
 import { StyleSheet, Platform } from "react-native";
 import { Episode } from "../../stores/episode-store";
 
 const EpisodeItem = observer(
   ({
-    onSelectEpisode,
+    onPlayEpisode,
+    onPauseEpisode,
     onDownloadEpisode,
     onDeleteEpisode,
     episode,
   }: {
-    onSelectEpisode(episode: typeof Episode.Type): void;
+    onPlayEpisode(episode: typeof Episode.Type): void;
+    onPauseEpisode(episode: typeof Episode.Type): void;
     onDownloadEpisode(episode: typeof Episode.Type): void;
     onDeleteEpisode(episode: typeof Episode.Type): void;
     episode: typeof Episode.Type;
   }) => {
     return (
       <View style={styles.episode} testID="episode-item">
-        <Text
-          testID="episode-title"
-          style={styles.title}
-          onPress={() => onSelectEpisode(episode)}
-        >
+        <Text testID="episode-title" style={styles.title}>
           {episode.title}
         </Text>
         <View style={{ flexDirection: "row" }}>
@@ -41,9 +39,19 @@ const EpisodeItem = observer(
               />
             </Button>
           )}
-          <Button transparent onPress={() => onSelectEpisode(episode)}>
-            <Icon name={Platform.OS === "ios" ? "ios-play" : "play"} />
-          </Button>
+          {episode.isPlaying === false ? (
+            <Button
+              transparent
+              disabled={episode.isLoading === true}
+              onPress={() => onPlayEpisode(episode)}
+            >
+              <Icon name={Platform.OS === "ios" ? "ios-play" : "play"} />
+            </Button>
+          ) : (
+            <Button transparent onPress={() => onPauseEpisode(episode)}>
+              <Icon name={Platform.OS === "ios" ? "ios-pause" : "pause"} />
+            </Button>
+          )}
         </View>
       </View>
     );

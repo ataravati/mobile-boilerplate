@@ -18,6 +18,7 @@ const AudioPlayerStoreModel = types
   .actions(self => ({
     load: flow(function*(episode: typeof Episode.Type) {
       self.isLoading = true;
+      episode.changeLoadingStatus(true);
       // If the track has changed...
       if (self.episode && episode.path !== self.episode.path) {
         self.currentTime = (yield audioPlayer.getCurrentTime()).seconds;
@@ -32,6 +33,7 @@ const AudioPlayerStoreModel = types
           : 1;
 
         self.paused = true;
+        (self.episode as typeof Episode.Type).changePlayingStatus(false);
       }
 
       try {
@@ -45,14 +47,17 @@ const AudioPlayerStoreModel = types
         console.log("Failed to load the audio file.", error);
       }
       self.isLoading = false;
+      episode.changeLoadingStatus(false);
     }),
     play: flow(function*() {
       if (audioPlayer.isLoaded()) {
         self.paused = false;
+        (self.episode as typeof Episode.Type).changePlayingStatus(true);
 
         try {
           yield audioPlayer.play();
           self.paused = true;
+          (self.episode as typeof Episode.Type).changePlayingStatus(false);
           self.currentTime = self.duration;
 
           (self.episode as typeof Episode.Type).delete();
@@ -62,6 +67,7 @@ const AudioPlayerStoreModel = types
     pause() {
       audioPlayer.pause();
       self.paused = true;
+      (self.episode as typeof Episode.Type).changePlayingStatus(false);
     },
     updateCurrentTime: flow(function*() {
       try {

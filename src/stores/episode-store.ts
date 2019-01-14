@@ -10,6 +10,8 @@ export const Episode = types
     url: types.string,
     localPath: types.maybe(types.string),
     isDownloading: types.optional(types.boolean, false),
+    isLoading: types.optional(types.boolean, false),
+    isPlaying: types.optional(types.boolean, false),
   })
   .views(self => ({
     get path() {
@@ -47,6 +49,12 @@ export const Episode = types
         }
       }
     }),
+    changeLoadingStatus(value: boolean) {
+      self.isLoading = value;
+    },
+    changePlayingStatus(value: boolean) {
+      self.isPlaying = value;
+    },
   }));
 
 const EpisodeStoreModel = types

@@ -213,6 +213,28 @@ exports[`app can render snapshot 1`] = `
                   />
                 </View>
               </RCTScrollView>
+              <View
+                style={
+                  Array [
+                    Object {
+                      "backgroundColor": "#F8F8F8",
+                      "borderColor": "#cbcbcb",
+                      "borderTopWidth": 0.5,
+                      "elevation": 3,
+                      "flexDirection": "row",
+                      "height": 55,
+                      "justifyContent": "center",
+                      "left": 0,
+                      "paddingBottom": 0,
+                      "right": 0,
+                    },
+                    Object {
+                      "flexDirection": "column",
+                      "height": 150,
+                    },
+                  ]
+                }
+              />
             </View>
           </View>
         </View>

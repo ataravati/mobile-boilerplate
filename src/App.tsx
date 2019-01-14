@@ -7,6 +7,7 @@ import { createDrawerNavigator, createStackNavigator } from "react-navigation";
 import { PointlessScreen } from "./screens/play-screen";
 import { Episodes } from "./screens/episodes";
 import { episodeStore } from "./stores/episode-store";
+import { audioPlayerStore } from "./stores/audio-player-store";
 
 const withDrawerButton = navigation => {
   return {
@@ -104,7 +105,7 @@ export class App extends React.Component<Props> {
 
   render() {
     return (
-      <Provider episodeStore={episodeStore}>
+      <Provider episodeStore={episodeStore} audioPlayerStore={audioPlayerStore}>
         <DrawerNavigator />
       </Provider>
     );

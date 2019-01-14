@@ -17,15 +17,10 @@ export class PointlessScreen extends React.Component<
     title: "در حال پخش",
   };
 
-  episode: typeof Episode.Type = this.props.navigation.getParam("episode");
-
   render() {
     return (
       <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-        <AudioPlayer
-          audioPlayerStore={audioPlayerStore}
-          episode={this.episode}
-        />
+        <AudioPlayer audioPlayerStore={audioPlayerStore} />
       </View>
     );
   }

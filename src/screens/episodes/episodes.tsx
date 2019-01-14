@@ -1,25 +1,29 @@
 import React from "react";
 import { inject, observer } from "mobx-react/native";
-import { Container, Content, Header, Spinner } from "native-base";
+import { Text, Button, Container, Content, Header, Footer, Spinner } from "native-base";
 import { ScrollView, StyleSheet } from "react-native";
 import EpisodeItem from "./episode-item";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { EpisodeStore, Episode } from "../../stores/episode-store";
+import { AudioPlayerStore } from "../../stores/audio-player-store";
 
 interface EpisodesProps {
   navigation: NavigationScreenProp<NavigationState>;
   episodeStore: EpisodeStore;
+  audioPlayerStore: AudioPlayerStore;
 }
 
 interface EspisodesState {}
 
 const EpisodeList = ({
-  onSelectEpisode,
+  onPlayEpisode,
+  onPauseEpisode,
   onDownloadEpisode,
   onDeleteEpisode,
   episodes,
 }: {
-  onSelectEpisode(episode: typeof Episode.Type): void;
+  onPlayEpisode(episode: typeof Episode.Type): void;
+  onPauseEpisode(episode: typeof Episode.Type): void;
   onDownloadEpisode(episode: typeof Episode.Type): void;
   onDeleteEpisode(episode: typeof Episode.Type): void;
   episodes: typeof Episode.Type[];
@@ -28,8 +32,11 @@ const EpisodeList = ({
     <ScrollView style={styles.episodes}>
       {episodes.map((episode: typeof Episode.Type, index: number) => (
         <EpisodeItem
-          onSelectEpisode={(episode: typeof Episode.Type) =>
-            onSelectEpisode(episode)
+          onPlayEpisode={(episode: typeof Episode.Type) =>
+            onPlayEpisode(episode)
+          }
+          onPauseEpisode={(episode: typeof Episode.Type) =>
+            onPauseEpisode(episode)
           }
           onDownloadEpisode={(episode: typeof Episode.Type) =>
             onDownloadEpisode(episode)
@@ -45,7 +52,7 @@ const EpisodeList = ({
   );
 };
 
-@inject("episodeStore")
+@inject("episodeStore", "audioPlayerStore")
 @observer
 export class Episodes extends React.Component<EpisodesProps, EspisodesState> {
   static navigationOptions = {
@@ -57,10 +64,14 @@ export class Episodes extends React.Component<EpisodesProps, EspisodesState> {
     this.props.episodeStore.fetchAll();
   }
 
-  goToEpisode = (episode: typeof Episode.Type) => {
-    this.props.navigation.push("NestedPointlessScreen", {
-      episode: episode,
+  playEpisode = (episode: typeof Episode.Type) => {
+    this.props.audioPlayerStore.load(episode).then(() => {
+      this.props.audioPlayerStore.play();
     });
+  };
+
+  pauseEpisode = (episode: typeof Episode.Type) => {
+    this.props.audioPlayerStore.pause();
   };
 
   downloadEpisode = (episode: typeof Episode.Type) => {
@@ -80,13 +91,26 @@ export class Episodes extends React.Component<EpisodesProps, EspisodesState> {
             <Spinner />
           ) : (
             <EpisodeList
-              onSelectEpisode={episode => this.goToEpisode(episode)}
+              onPlayEpisode={episode => this.playEpisode(episode)}
+              onPauseEpisode={episode => this.pauseEpisode(episode)}
               onDownloadEpisode={episode => this.downloadEpisode(episode)}
               onDeleteEpisode={episode => this.deleteEpisode(episode)}
               episodes={this.props.episodeStore.episodes}
             />
           )}
         </Content>
+        <Footer style={{ flexDirection: "column", height: 150 }}>
+          {this.props.audioPlayerStore.episode && (
+            <Button
+              full
+              onPress={() => {
+                this.props.navigation.push("NestedPointlessScreen");
+              }}
+            >
+              <Text>در حال پحش</Text>
+            </Button>
+          )}
+        </Footer>
       </Container>
     );
   }
