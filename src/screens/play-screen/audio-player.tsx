@@ -6,7 +6,7 @@ import Controls from "./controls";
 import { AudioPlayerStore } from "../../stores/audio-player-store";
 
 export interface AudioPlayerProps {
-  audioPlayerStore: AudioPlayerStore;
+  audioPlayerStore?: AudioPlayerStore;
 }
 
 export interface AudioPlayerState {}
@@ -22,47 +22,47 @@ export default class AudioPlayer extends React.Component<
   }
 
   trackInterval = setInterval(() => {
-    if (this.props.audioPlayerStore.isLoading === false) {
-      this.props.audioPlayerStore.updateCurrentTime();
+    if (this.props.audioPlayerStore!.isLoading === false) {
+      this.props.audioPlayerStore!.updateCurrentTime();
     }
   }, 250);
 
   onPressPlay = () => {
-    this.props.audioPlayerStore.paused === true ? this.play() : this.pause();
+    this.props.audioPlayerStore!.paused === true ? this.play() : this.pause();
   };
 
   play() {
-    this.props.audioPlayerStore.play();
+    this.props.audioPlayerStore!.play();
   }
 
   pause() {
-    this.props.audioPlayerStore.pause();
+    this.props.audioPlayerStore!.pause();
   }
 
   seekTo = (time: number) => {
-    this.props.audioPlayerStore.setCurrentTime(time);
+    this.props.audioPlayerStore!.setCurrentTime(time);
   };
 
   setVolume = (volume: number) => {
-    this.props.audioPlayerStore.setVolume(volume);
+    this.props.audioPlayerStore!.setVolume(volume);
   };
 
   render() {
     return (
       <View style={{ flex: 1, justifyContent: "center" }}>
-        {this.props.audioPlayerStore.isLoading === true ? (
+        {this.props.audioPlayerStore!.isLoading === true ? (
           <Spinner />
         ) : (
           <View style={{ flex: 1, justifyContent: "flex-end" }}>
             <Controls
-              paused={this.props.audioPlayerStore.paused}
-              volume={this.props.audioPlayerStore.volume}
+              paused={this.props.audioPlayerStore!.paused}
+              volume={this.props.audioPlayerStore!.volume}
               onPressPlay={() => this.onPressPlay()}
               onVolumeChange={(volume: number) => this.setVolume(volume)}
             />
             <SeekBar
-              duration={this.props.audioPlayerStore.duration}
-              currentTime={this.props.audioPlayerStore.currentTime}
+              duration={this.props.audioPlayerStore!.duration}
+              currentTime={this.props.audioPlayerStore!.currentTime}
               onSeek={(time: number) => this.seekTo(time)}
               onSeekStart={() => this.pause()}
               onSeekEnd={() => this.play()}
