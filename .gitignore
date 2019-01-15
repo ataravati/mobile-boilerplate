@@ -57,3 +57,8 @@ buck-out/
 
 # Jest
 .jest/
+
+# Realm
+localDb.realm.management/
+realm-object-server/
+localDb.realm.*
