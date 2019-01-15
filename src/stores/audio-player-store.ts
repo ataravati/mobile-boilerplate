@@ -13,6 +13,7 @@ const AudioPlayerStoreModel = types
     duration: types.number,
     currentTime: types.number,
     volume: types.number,
+    speed: types.number,
     episode: types.maybe(types.reference(Episode)),
   })
   .actions(self => ({
@@ -30,6 +31,9 @@ const AudioPlayerStoreModel = types
           : 0;
         self.volume = snapshots[episode.path]
           ? snapshots[episode.path].volume
+          : 1;
+        self.speed = snapshots[episode.path]
+          ? snapshots[episode.path].speed
           : 1;
 
         self.paused = true;
@@ -88,6 +92,10 @@ const AudioPlayerStoreModel = types
       audioPlayer.setVolume(volume);
       self.volume = volume;
     },
+    setSpeed(value: number) {
+      audioPlayer.setSpeed(value);
+      self.speed = value;
+    },
   }));
 
 export const audioPlayerStore = AudioPlayerStoreModel.create({
@@ -96,6 +104,7 @@ export const audioPlayerStore = AudioPlayerStoreModel.create({
   duration: -1,
   currentTime: 0,
   volume: 1,
+  speed: 1,
 });
 
 onSnapshot(audioPlayerStore, snapshot => {

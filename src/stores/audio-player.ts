@@ -2,9 +2,7 @@ import Sound from "react-native-sound";
 import { Platform } from "react-native";
 
 Sound.setCategory("Playback", true);
-if (Platform.OS === "ios") {
-  Sound.setMode("SpokenAudio");
-}
+if (Platform.OS === "ios") Sound.setMode("SpokenAudio");
 
 const sounds = {};
 
@@ -72,6 +70,9 @@ export default class AudioPlayer {
   };
 
   setCurrentTime = (time: number) => {
+    if (time < 0) time = 0;
+    if (time > this.getDuration()) time = this.getDuration();
+
     sounds[this.path].setCurrentTime(time);
   };
 
@@ -86,5 +87,9 @@ export default class AudioPlayer {
 
   setVolume = (volume: number) => {
     sounds[this.path].setVolume(volume);
+  };
+
+  setSpeed = (speed: number) => {
+    sounds[this.path].setSpeed(speed);
   };
 }

@@ -50,12 +50,32 @@ export default class AudioPlayer extends React.Component<
     if (this.pausedBeforeSeekStart === false) this.play();
   };
 
+  forward = () => {
+    let time = this.props.audioPlayerStore!.currentTime;
+    if (time < this.props.audioPlayerStore!.duration) {
+      time += Math.min(30, this.props.audioPlayerStore!.duration - time);
+      this.props.audioPlayerStore!.setCurrentTime(time);
+    }
+  };
+
+  rewind = () => {
+    let time = this.props.audioPlayerStore!.currentTime;
+    if (time > 0) {
+      time -= Math.min(15, time);
+      this.props.audioPlayerStore!.setCurrentTime(time);
+    }
+  };
+
   seekTo = (time: number) => {
     this.props.audioPlayerStore!.setCurrentTime(time);
   };
 
   setVolume = (volume: number) => {
     this.props.audioPlayerStore!.setVolume(volume);
+  };
+
+  setSpeed = (speed: number) => {
+    this.props.audioPlayerStore!.setSpeed(speed);
   };
 
   render() {
@@ -68,8 +88,12 @@ export default class AudioPlayer extends React.Component<
             <Controls
               paused={this.props.audioPlayerStore!.paused}
               volume={this.props.audioPlayerStore!.volume}
+              speed={this.props.audioPlayerStore!.speed}
               onPressPlay={() => this.onPressPlay()}
+              onForward={() => this.forward()}
+              onRewind={() => this.rewind()}
               onVolumeChange={(volume: number) => this.setVolume(volume)}
+              onSpeedChange={(speed: number) => this.setSpeed(speed)}
             />
             <SeekBar
               duration={this.props.audioPlayerStore!.duration}
