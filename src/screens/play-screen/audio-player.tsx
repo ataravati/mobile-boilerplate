@@ -17,6 +17,8 @@ export default class AudioPlayer extends React.Component<
   AudioPlayerProps,
   AudioPlayerState
 > {
+  private pausedBeforeSeekStart = true;
+
   constructor(props: AudioPlayerProps) {
     super(props);
   }
@@ -38,6 +40,15 @@ export default class AudioPlayer extends React.Component<
   pause() {
     this.props.audioPlayerStore!.pause();
   }
+
+  onSeekStart = () => {
+    this.pausedBeforeSeekStart = this.props.audioPlayerStore!.paused;
+    this.pause();
+  };
+
+  onSeekEnd = () => {
+    if (this.pausedBeforeSeekStart === false) this.play();
+  };
 
   seekTo = (time: number) => {
     this.props.audioPlayerStore!.setCurrentTime(time);
@@ -64,8 +75,8 @@ export default class AudioPlayer extends React.Component<
               duration={this.props.audioPlayerStore!.duration}
               currentTime={this.props.audioPlayerStore!.currentTime}
               onSeek={(time: number) => this.seekTo(time)}
-              onSeekStart={() => this.pause()}
-              onSeekEnd={() => this.play()}
+              onSeekStart={() => this.onSeekStart()}
+              onSeekEnd={() => this.onSeekEnd()}
             />
           </View>
         )}

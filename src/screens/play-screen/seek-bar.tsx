@@ -47,7 +47,7 @@ const SeekBar = ({
         style={{ direction: "ltr", marginTop: 10 }}
         maximumValue={Math.max(1, duration, currentTime)}
         value={currentTime}
-        onResponderMove={() => onSeekStart()}
+        onResponderStart={() => onSeekStart()}
         onResponderRelease={() => onSeekEnd()}
         onSlidingComplete={(value: number) => onSeek(value)}
       />
