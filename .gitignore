@@ -61,4 +61,5 @@ buck-out/
 # Realm
 localDb.realm.management/
 realm-object-server/
+localDb.realm
 localDb.realm.*
