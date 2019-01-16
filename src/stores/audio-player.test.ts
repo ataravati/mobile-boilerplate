@@ -42,7 +42,7 @@ describe("audio-player", () => {
 
   it("can change the volume", () => {
     let volume = 0.8;
-    audioPlayer.setVolume(0.8);
+    audioPlayer.setVolume(volume);
     expect(audioPlayer.getVolume()).toEqual(volume);
     audioPlayer.setVolume(volume - 0.3);
     expect(audioPlayer.getVolume()).toEqual(volume - 0.3);
