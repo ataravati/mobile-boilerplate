@@ -73,9 +73,11 @@ export class Episodes extends React.Component<EpisodesProps, EspisodesState> {
   }
 
   playEpisode = (episode: typeof Episode.Type) => {
-    this.props.audioPlayerStore.load(episode).then(() => {
-      this.props.audioPlayerStore.play();
-    });
+    if (this.props.audioPlayerStore.isLoading === false) {
+      this.props.audioPlayerStore.load(episode).then(() => {
+        this.props.audioPlayerStore.play();
+      });
+    }
   };
 
   pauseEpisode = (episode: typeof Episode.Type) => {

@@ -99,7 +99,7 @@ const AudioPlayerStoreModel = types
   }));
 
 export const audioPlayerStore = AudioPlayerStoreModel.create({
-  isLoading: true,
+  isLoading: false,
   paused: true,
   duration: -1,
   currentTime: 0,
