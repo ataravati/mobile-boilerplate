@@ -39,12 +39,18 @@ const SeekBar = ({
 
   return (
     <View>
-      <View style={{ flexDirection: "row" }}>
-        <Text>Remaining: {remaining}</Text>
-        <Text style={{ marginStart: 20 }}>Elapsed: {elapsed}</Text>
+      <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
+        <Text>{remaining}</Text>
+        <Text>{elapsed}</Text>
       </View>
       <Slider
-        style={{ direction: "ltr", marginTop: 10 }}
+        style={{ direction: "ltr" }}
         maximumValue={Math.max(1, duration, currentTime)}
         value={currentTime}
         onResponderStart={() => onSeekStart()}

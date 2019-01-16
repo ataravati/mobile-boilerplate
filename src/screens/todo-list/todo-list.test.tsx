@@ -8,7 +8,6 @@ import { Text } from "native-base";
 import { TodoItem } from "./todo-item";
 import { TodoList } from "./todo-list";
 import { todoStore } from "../../stores/todo-store";
-import console = require("console");
 
 // https://github.com/react-navigation/react-navigation/issues/2269
 // React Navigation generates random React keys, which makes
