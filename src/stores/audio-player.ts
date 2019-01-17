@@ -75,7 +75,6 @@ export default class AudioPlayer {
 
   release = () => {
     this.sound!.release();
-    this.sound = null;
   };
 
   getVolume = () => {
