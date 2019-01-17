@@ -4,9 +4,8 @@ import { Platform } from "react-native";
 Sound.setCategory("Playback", true);
 if (Platform.OS === "ios") Sound.setMode("SpokenAudio");
 
-const sounds = {};
-
 export default class AudioPlayer {
+  private sound: Sound | null = null;
   path = "";
 
   load = (path: string, time: number = 0, volume: number = 1) => {
@@ -20,7 +19,7 @@ export default class AudioPlayer {
         } else {
           if (time > 0) sound.setCurrentTime(time);
           sound.setVolume(volume);
-          sounds[path] = sound;
+          this.sound = sound;
           that.path = path;
           resolve();
         }
@@ -29,18 +28,18 @@ export default class AudioPlayer {
   };
 
   isLoaded = () => {
-    return this.path ? sounds[this.path].isLoaded() : false;
+    return this.path ? this.sound!.isLoaded() : false;
   };
 
   play = () => {
     return new Promise((resolve, reject) => {
       if (Platform.OS === "ios") Sound.setActive(true);
-      sounds[this.path].play((success?: boolean) => {
+      this.sound!.play((success?: boolean) => {
         if (success === true) {
           if (Platform.OS === "ios") Sound.setActive(false);
           resolve();
         } else {
-          if (Platform.OS === "android") sounds[this.path].reset();
+          if (Platform.OS === "android") this.sound!.reset();
           reject();
         }
       });
@@ -49,23 +48,21 @@ export default class AudioPlayer {
 
   pause = () => {
     return new Promise(resolve => {
-      sounds[this.path].pause(() => {
+      this.sound!.pause(() => {
         resolve();
       });
     });
   };
 
   getDuration = () => {
-    return sounds[this.path].getDuration();
+    return this.sound!.getDuration();
   };
 
   getCurrentTime = () => {
     return new Promise(resolve => {
-      sounds[this.path].getCurrentTime(
-        (seconds: number, isPlaying: boolean) => {
-          resolve({ seconds, isPlaying });
-        },
-      );
+      this.sound!.getCurrentTime((seconds: number, isPlaying: boolean) => {
+        resolve({ seconds, isPlaying });
+      });
     });
   };
 
@@ -73,23 +70,23 @@ export default class AudioPlayer {
     if (time < 0) time = 0;
     if (time > this.getDuration()) time = this.getDuration();
 
-    sounds[this.path].setCurrentTime(time);
+    this.sound!.setCurrentTime(time);
   };
 
   release = () => {
-    sounds[this.path].release();
-    sounds[this.path] = null;
+    this.sound!.release();
+    this.sound = null;
   };
 
   getVolume = () => {
-    return sounds[this.path].getVolume();
+    return this.sound!.getVolume();
   };
 
   setVolume = (volume: number) => {
-    sounds[this.path].setVolume(volume);
+    this.sound!.setVolume(volume);
   };
 
   setSpeed = (speed: number) => {
-    sounds[this.path].setSpeed(speed);
+    this.sound!.setSpeed(speed);
   };
 }
