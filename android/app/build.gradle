@@ -137,6 +137,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-track-player')
     compile project(':realm')
     compile project(':rn-fetch-blob')
     compile project(':react-native-sound')
