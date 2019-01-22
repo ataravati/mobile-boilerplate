@@ -1,6 +1,7 @@
 import { types, onSnapshot, flow, getSnapshot } from "mobx-state-tree";
-import TrackPlayer, { Track } from "react-native-track-player";
+import TrackPlayer from "react-native-track-player";
 import { Episode } from "./episode-store";
+import { Platform } from "react-native";
 
 const snapshots = {};
 
@@ -11,7 +12,7 @@ const onStateChanged = TrackPlayer.addEventListener("playback-state", data => {
 
 const AudioPlayerStoreModel = types
   .model("AudioPlayerStore", {
-    state: types.maybe(types.string),
+    state: Platform.OS === "ios" ? types.string : types.number,
     duration: types.number,
     currentTime: types.number,
     volume: types.number,
@@ -37,7 +38,13 @@ const AudioPlayerStoreModel = types
       console.log("STATE_PAUSED", TrackPlayer.STATE_PAUSED);
       console.log("STATE_STOPPED", TrackPlayer.STATE_STOPPED);
 
-      yield TrackPlayer.setupPlayer();
+      // const setupOptions = {
+      //   minBuffer: 60,
+      //   playBuffer: 90,
+      //   maxBuffer: 120,
+      //   maxCacheSize: 500,
+      // };
+      yield TrackPlayer.setupPlayer(/*setupOptions*/);
       TrackPlayer.updateOptions({
         stopWithApp: true,
         capabilities: [
