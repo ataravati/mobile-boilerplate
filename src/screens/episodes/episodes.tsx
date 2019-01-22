@@ -13,7 +13,10 @@ import { ScrollView, StyleSheet } from "react-native";
 import EpisodeItem from "./episode-item";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { EpisodeStore, Episode } from "../../stores/episode-store";
-import { AudioPlayerStore } from "../../stores/audio-player-store";
+import {
+  AudioPlayerStore,
+  audioPlayerStore,
+} from "../../stores/track-player-store";
 
 interface EpisodesProps {
   navigation: NavigationScreenProp<NavigationState>;
@@ -72,12 +75,21 @@ export class Episodes extends React.Component<EpisodesProps, EspisodesState> {
     this.props.episodeStore.fetchAll();
   }
 
+  componentDidMount() {
+    audioPlayerStore!.setup().then(() => {
+      console.log("State:", audioPlayerStore!.state);
+      // this.props.audioPlayerStore
+      //   .addEpisodes(this.props.episodeStore.episodes)
+      //   .then(() => {
+      //     this.props.audioPlayerStore!.pause();
+      //   });
+    });
+  }
+
   playEpisode = (episode: typeof Episode.Type) => {
-    if (this.props.audioPlayerStore.isLoading === false) {
-      this.props.audioPlayerStore.load(episode).then(() => {
-        this.props.audioPlayerStore.play();
-      });
-    }
+    this.props.audioPlayerStore.addEpisode(episode).then(() => {
+      this.props.audioPlayerStore.play();
+    });
   };
 
   pauseEpisode = (episode: typeof Episode.Type) => {
@@ -117,7 +129,7 @@ export class Episodes extends React.Component<EpisodesProps, EspisodesState> {
                 this.props.navigation.push("NestedPointlessScreen");
               }}
             >
-              <Text>در حال پحش</Text>
+              <Text>در حال پخش</Text>
             </Button>
           )}
         </Footer>

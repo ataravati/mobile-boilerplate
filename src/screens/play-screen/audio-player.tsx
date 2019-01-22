@@ -3,7 +3,7 @@ import { inject, observer } from "mobx-react/native";
 import { View, Spinner } from "native-base";
 import SeekBar from "./seek-bar";
 import Controls from "./controls";
-import { AudioPlayerStore } from "../../stores/audio-player-store";
+import { AudioPlayerStore } from "../../stores/track-player-store";
 
 export interface AudioPlayerProps {
   audioPlayerStore?: AudioPlayerStore;
@@ -29,25 +29,20 @@ export default class AudioPlayer extends React.Component<
     }
   }, 250);
 
-  onPressPlay = () => {
-    this.props.audioPlayerStore!.paused === true ? this.play() : this.pause();
+  onTogglePlay = () => {
+    this.props.audioPlayerStore!.paused === true
+      ? this.props.audioPlayerStore!.play()
+      : this.props.audioPlayerStore!.pause();
   };
-
-  play() {
-    this.props.audioPlayerStore!.play();
-  }
-
-  pause() {
-    this.props.audioPlayerStore!.pause();
-  }
 
   onSeekStart = () => {
     this.pausedBeforeSeekStart = this.props.audioPlayerStore!.paused;
-    this.pause();
+    this.props.audioPlayerStore!.pause();
   };
 
   onSeekEnd = () => {
-    if (this.pausedBeforeSeekStart === false) this.play();
+    if (this.pausedBeforeSeekStart === false)
+      this.props.audioPlayerStore!.play();
   };
 
   forward = () => {
@@ -66,8 +61,10 @@ export default class AudioPlayer extends React.Component<
     }
   };
 
-  seekTo = (time: number) => {
-    this.props.audioPlayerStore!.setCurrentTime(time);
+  seekTo = async (time: number) => {
+    console.log("Time", time);
+    await this.props.audioPlayerStore!.setCurrentTime(time);
+    console.log("Current Time", this.props.audioPlayerStore!.currentTime);
   };
 
   setVolume = (volume: number) => {
@@ -89,7 +86,7 @@ export default class AudioPlayer extends React.Component<
               paused={this.props.audioPlayerStore!.paused}
               volume={this.props.audioPlayerStore!.volume}
               speed={this.props.audioPlayerStore!.speed}
-              onPressPlay={() => this.onPressPlay()}
+              onPressPlay={() => this.onTogglePlay()}
               onForward={() => this.forward()}
               onRewind={() => this.rewind()}
               onVolumeChange={(volume: number) => this.setVolume(volume)}

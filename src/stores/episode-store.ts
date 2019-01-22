@@ -1,4 +1,3 @@
-import { Platform } from "react-native";
 import { flow, types, onSnapshot } from "mobx-state-tree";
 import RNFetchBlob from "rn-fetch-blob";
 import { getPodcasts, updateEpisode } from "../database/allSchemas";
@@ -29,7 +28,7 @@ export const Episode = types
           path: dirs.MainBundleDir + "/" + filename,
         }).fetch("GET", self.url);
         console.log(`The file saved to ${res.path()}.`);
-        self.localPath = Platform.OS === "android" ? res.path() : filename;
+        self.localPath = "file://" + res.path();
 
         yield updateEpisode(self);
       } catch (error) {
