@@ -1,7 +1,6 @@
 import { types, onSnapshot, flow, getSnapshot } from "mobx-state-tree";
 import TrackPlayer from "react-native-track-player";
 import { Episode } from "./episode-store";
-import { Platform } from "react-native";
 
 const snapshots = {};
 
@@ -12,7 +11,7 @@ const onStateChanged = TrackPlayer.addEventListener("playback-state", data => {
 
 const AudioPlayerStoreModel = types
   .model("AudioPlayerStore", {
-    state: Platform.OS === "ios" ? types.string : types.number,
+    state: types.maybe(types.string),
     duration: types.number,
     currentTime: types.number,
     volume: types.number,
